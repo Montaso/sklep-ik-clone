@@ -5,7 +5,7 @@ class Category:
         self.products = []
         self.link = None
 
-    def __init__(self, parent_category: object, name: str, link: str):
+    def __init__(self, name: str, parent_category: object, link: str):
         self.parent_category = parent_category
         self.name = name
         self.link = link
