@@ -5,3 +5,6 @@ class Attribute:
                  ):
         self.name = attr_name
         self.value = attr_value
+
+    def __str__(self):
+        return self.name

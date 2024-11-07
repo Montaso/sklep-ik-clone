@@ -1,5 +1,4 @@
-import Category
-import Attribute
+from scrapper.models import Attribute, Category
 
 
 class Product:
@@ -20,5 +19,5 @@ class Product:
         self.img_uris = img_uris
         self.attributes = attributes
 
-    def to_csv(self):
-        return f"{self.name};{self.price};{self.link};{self.desc};{self.category};{self.img_uris};{self.attributes}"
+    def __str__(self):
+        return self.name

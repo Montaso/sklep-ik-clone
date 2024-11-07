@@ -1,12 +1,19 @@
-ENV_TEST = True  # if in test, gets only one category and saves it in scrapper_test folder
+# if in test, gets only one category
+# and saves it in scrapper_test folder
+ENV_TEST = True
 
-URL = "https://blasters4masters.com"
+# common
+URL = "https://sklep-ik.pl"
+IMG_SUBDIRECTORY_NAME = "img"
+IMG_PER_PRODUCT = 2
 
-TEST_CSV_SAVE_PATH = "../data/test/data.csv"
-TEST_IMG_SAVE_PATH = "../data/test/img"
-PROD_CSV_SAVE_PATH = "../data/prod/data.csv"
-PROD_IMG_SAVE_PATH = "../data/prod/img"
+# for test env
+SAVE_DIRECTORY = "./data/test"
+MAX_CATEGORIES = 100000
 
-# TODO: zaimplementować w scrapperze że -1 to wszystkie zdjęcia
-TEST_IMG_PER_PRODUCT = 2
-PROD_IMG_PER_PRODUCT = 2
+# for prod env
+if not ENV_TEST:
+    SAVE_DIRECTORY = "./data/prod"
+    MAX_CATEGORIES = -1
+
+# TODO: zaimplementować w scrapperze że img-per-prodcut = -1 to wszystkie zdjęcia
