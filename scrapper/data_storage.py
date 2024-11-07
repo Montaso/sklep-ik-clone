@@ -4,9 +4,13 @@ from models import Category
 
 
 def save(obj_arr: [object], save_path: str, open_mode='w'):
+    if open_mode == 'a' and not os.path.exists(save_path):
+        with open(save_path, open_mode, encoding="utf-8") as file:
+            file.write(get_csv_title_row(obj_arr[0]))
+
     with open(save_path, open_mode, encoding="utf-8") as file:
-        for product in obj_arr:
-            file.write(f"{product.to_csv()}\n")
+        for obj in obj_arr:
+            file.write(f"{get_csv_value_row(obj)}\n")
 
 
 def create_categories_directories(categories: [Category], root_path: str):
