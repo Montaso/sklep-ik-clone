@@ -7,6 +7,7 @@ from scrapper.models.Category import Category
 from scrapper.models.Product import Product
 
 
+# !!!! metoda nie działa w sklep-ik, stworzona dla blasters4masters
 def get_imgs(soup: BeautifulSoup, product_name: str, category_name: str) -> [str]:
     save_path = env.TEST_IMG_SAVE_PATH if env.ENV_TEST else env.PROD_IMG_SAVE_PATH
     save_path = os.path.join(save_path, category_name, product_name)
@@ -43,38 +44,16 @@ def get_imgs(soup: BeautifulSoup, product_name: str, category_name: str) -> [str
     return uri_array
 
 
-# TODO: dodać kategorię i atrybuty
 # tworzy instację Product z odpowiedniego fragmentu html
-def extract_product(source, category: Category) -> Product:
-    h2_element = source.find('h2')
+def extract_product(products_subpage_url: str, products_category: Category) -> Product:
+    response = requests.get(products_subpage_url)
+    soup = BeautifulSoup(response.text, 'html.parser')
 
-    name = h2_element.text.strip()
-    price = source.find('span').text.strip()
-    link = h2_element.find('a').get('href')
-
-    desc = None
-    detail_soup = BeautifulSoup(requests.get(link).text, "html.parser")
-
-    desc_element = detail_soup.find('div', attrs={'class': 'woocommerce-product-details__short-description'})
-    if desc_element is not None:
-        desc_text = desc_element.text
-        if desc_text is not None:
-            desc = desc_text.strip()
-
-    imgs = get_imgs(detail_soup, name, category.name)
-
-    return Product(
-        name=name,
-        link=link,
-        price=price,
-        desc=desc,
-        img_uris=imgs
-    )
+    return Product()
 
 
-# TODO iterować po kolejnych podstronach kategorii (bo na razie bierze tylko z page 1 kategorii)
 # funkcja pobiera dane o wszystkich produktach w kategorii (ich nazwę i cenę)
-def get_products(category: Category) -> [Product]:
+def get_products_in_category(category: Category) -> [Product]:
     if category.link is None:
         return []
 
@@ -83,14 +62,18 @@ def get_products(category: Category) -> [Product]:
     response = requests.get(category.link)
     category_soup = BeautifulSoup(response.text, 'html.parser')
 
-    products_details = category_soup.find_all('div', attrs={'class': 'text-center product-details'})
+    products_details_urls = category_soup.find_all('div', attrs={'class': 'fusion-link-wrapper'})
 
-    for detail in products_details:
+    for detail_url in products_details_urls:
         try:
-            product = extract_product(detail, category)
-            result_products.append(product)
-            print(product.name + " | " + product.price + " | " + product.link + "\n" + product.desc + "\n")
+            product = extract_product(detail_url, category)
+            append_with_communicate(product, result_products)
         except Exception as e:
-            print("Can't extract product: ", e, "\nHTML fragment:\n", detail)
+            print("Can't extract product: ", e, "\nURL:\n", products_details_urls)
 
     return result_products
+
+
+def append_with_communicate(product: Product, arr: [Product]):
+    arr.append(product)
+    print(f"Exported product: {product.name} (category: {product.category})")

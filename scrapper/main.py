@@ -1,18 +1,19 @@
 import env
 from data_storage import *
-from scrapper.scrapper_modules.products_extraction import get_products
+from scrapper.scrapper_modules.products_extraction import get_products_in_category
 from scrapper_modules.categories_extraction import get_categories
 
 
 def main():
     categories = get_categories()
+
+    list_exported_categories(categories)
     create_categories_directories(categories, env.PATH_SAVE_DIRECTORY)
     save(categories, env.PATH_CATEGORIES_CSV)
 
-    list_exported_categories(categories)
     for category in categories:
         pass
-        products = get_products(category)
+        products = get_products_in_category(category)
 
         #with open(save_path, 'w', encoding="utf-8") as file:
         #    for product in products:

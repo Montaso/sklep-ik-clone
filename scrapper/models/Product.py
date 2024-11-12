@@ -12,7 +12,9 @@ class Product:
                  img_uris: [str] = None,
                  category: Category = None,
                  attributes: [Attribute] = None,
-                 deal: str = ""
+                 deal: str = "",
+                 advises: [str] = [],
+                 weight: int = -1
                  ):
         self.name = name
         self.original_price = original_price
@@ -24,6 +26,8 @@ class Product:
         self.attributes = attributes
         self.deal = deal
         self.discount = discount
+        self.advises = advises
+        self.weight = weight
 
     def __str__(self):
         return self.name
