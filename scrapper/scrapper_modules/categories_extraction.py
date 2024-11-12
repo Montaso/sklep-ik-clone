@@ -42,7 +42,7 @@ def get_categories() -> [Category]:
             if new_subcategory.parent_category.name == "Włóczki":
                 result_categories.extend(extract_sub_subcategories(link, new_subcategory))
 
-    return result_categories[2:]
+    return result_categories[2:env.MAX_CATEGORIES + 2]
 
 
 def extract_sub_subcategories(subcategory_link: str, parent_category: Category):
