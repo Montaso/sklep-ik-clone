@@ -1,45 +1,12 @@
+# pobiera zdjecia i zwraca tablice ze sciezkami do plikow
 import os
 import requests
 from bs4 import BeautifulSoup
-import scrapper.env as env
+from scrapper import env
 from scrapper.models.Category import Category
 from scrapper.models.Product import Product
 
 
-# funkcja ściąga wszystkie kategorie ze strony i zapisuje ich nazwy + linki do podstron
-def get_categories() -> [Category]:
-    result_categories: [Category] = []
-
-    response = requests.get(env.URL)
-    soup = BeautifulSoup(response.text, 'html.parser')
-    categories_html = soup.find_all('li', class_='awb-menu__main-li')
-
-    if env.MAX_CATEGORIES != -1:
-        max_categories = min(env.MAX_CATEGORIES, len(categories_html) - 1)
-        categories_html = categories_html[:max_categories]
-
-    for category in categories_html:
-        name_span = category.find_next('span', class_='menu-text')
-        name = name_span.get_text(strip=True)
-        parent = Category(name, None, None, None)
-        result_categories.append(parent)
-
-        subcategories = category.find_all('a', 'awb-menu__sub-a')
-        for subcategory in subcategories:
-            name = subcategory.find_next('span').get_text(strip=True)
-            link = subcategory['href']
-            new_subcategory = Category(name, parent, link, None)
-            result_categories.append(new_subcategory)
-
-            # cut first two and everything after 'WSZYSTKIE PROMOCJE',
-            # because they are not categories
-            if new_subcategory.name == 'WSZYSTKIE PROMOCJE':
-                return result_categories[2:]
-
-    return result_categories[2:]
-
-
-# pobiera zdjecia i zwraca tablice ze sciezkami do plikow
 def get_imgs(soup: BeautifulSoup, product_name: str, category_name: str) -> [str]:
     save_path = env.TEST_IMG_SAVE_PATH if env.ENV_TEST else env.PROD_IMG_SAVE_PATH
     save_path = os.path.join(save_path, category_name, product_name)
@@ -107,10 +74,13 @@ def extract_product(source, category: Category) -> Product:
 
 # TODO iterować po kolejnych podstronach kategorii (bo na razie bierze tylko z page 1 kategorii)
 # funkcja pobiera dane o wszystkich produktach w kategorii (ich nazwę i cenę)
-def get_products(category_url: str, category: Category) -> [Product]:
+def get_products(category: Category) -> [Product]:
+    if category.link is None:
+        return []
+
     result_products: [Product] = []
 
-    response = requests.get(category_url)
+    response = requests.get(category.link)
     category_soup = BeautifulSoup(response.text, 'html.parser')
 
     products_details = category_soup.find_all('div', attrs={'class': 'text-center product-details'})
