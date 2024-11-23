@@ -15,5 +15,6 @@ if not ENV_TEST:
 URL = "https://sklep-ik.pl"
 IMG_SUBDIRECTORY_NAME = "img"
 PATH_CATEGORIES_CSV = os.path.join(PATH_SAVE_DIRECTORY, "categories.csv")
+PATH_PRODUCTS_CSV = os.path.join(PATH_SAVE_DIRECTORY, "products.csv")
 IMG_PER_PRODUCT = 2
 

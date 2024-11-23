@@ -49,7 +49,38 @@ def extract_product(products_subpage_url: str, products_category: Category) -> P
     response = requests.get(products_subpage_url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    return Product()
+    product_name = soup.find('div', class_='fusion-title-2').get_text(strip=True)
+
+    #TODO rozdzielic ceny oryginalna od przecenionej
+    product_price = soup.find('p', attrs={'class': 'price'}).get_text(strip=True)
+    product_desc_meta_tag = soup.find('meta', attrs={'name': 'description'})
+
+    product_desc = None
+    # opis produktu jest w atrybucie content w tagu <meta>
+    if product_desc_meta_tag and 'content' in product_desc_meta_tag.attrs:
+        product_desc = product_desc_meta_tag['content'].strip()
+
+    # zdjecia produktu
+    product_image_a = soup.find_all('a', attrs={'class': 'avada-product-gallery-lightbox-trigger'})
+    product_uris = []
+    if product_image_a:
+        for a_tag in product_image_a:
+            if 'href' in a_tag.attrs:
+                product_uris.append(a_tag['href'])
+
+    # atrybuty produktu (tuple z tytułem atrybutu i jego opisem)
+    attributes_table = soup.find('table', class_='woocommerce-product-attributes shop_attributes')
+    product_attributes = []
+    if attributes_table:
+        rows = attributes_table.find_all('tr')
+        for row in rows:
+            label = row.find('th').text.strip()
+            value = row.find('td').text.strip()
+            product_attributes.append((label, value))
+
+    #TODO Dodac reszte atrybutow produktu 
+
+    return Product(name= product_name, original_price=product_price, link=products_subpage_url, desc=product_desc, img_uris=product_uris, category=products_category, attributes=product_attributes)
 
 
 # funkcja pobiera dane o wszystkich produktach w kategorii (ich nazwę i cenę)
@@ -62,14 +93,19 @@ def get_products_in_category(category: Category) -> [Product]:
     response = requests.get(category.link)
     category_soup = BeautifulSoup(response.text, 'html.parser')
 
-    products_details_urls = category_soup.find_all('div', attrs={'class': 'fusion-link-wrapper'})
+    products_div = category_soup.find_all('div', attrs={'class': 'product-details-container'})
 
-    for detail_url in products_details_urls:
+    for div in products_div:
         try:
-            product = extract_product(detail_url, category)
-            append_with_communicate(product, result_products)
+            # znajdywanie linku w kontenerze produktu
+            a_tag = div.find('a')
+            if a_tag and 'href' in a_tag.attrs:
+                product_link = a_tag['href']
+                product = extract_product(product_link, category)
+                append_with_communicate(product, result_products)
+                result_products.append(product)
         except Exception as e:
-            print("Can't extract product: ", e, "\nURL:\n", products_details_urls)
+            print("Can't extract product: ", e, "\nURL:\n", product_link)
 
     return result_products
 

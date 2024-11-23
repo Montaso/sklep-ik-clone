@@ -14,7 +14,9 @@ def main():
     for category in categories:
         pass
         products = get_products_in_category(category)
-
+        # if products:
+        #     save(products, env.PATH_PRODUCTS_CSV)
+        
         #with open(save_path, 'w', encoding="utf-8") as file:
         #    for product in products:
         #        file.write(f"{product.to_csv()}\n")
