@@ -50,30 +50,33 @@ def extract_product(products_subpage_url: str, products_category: Category) -> P
     response = requests.get(products_subpage_url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    product_name = soup.find('div', class_='fusion-title-2').get_text(strip=True)
+    product_name = soup.find('div', class_='fusion-title-2')
+    if product_name:
+        product_name = product_name.get_text(strip=True)
 
     product_current_price = None
     product_original_price = None
-    product_price_text = soup.find('p', attrs={'class': 'price'}).get_text(strip=True)
+    product_price_text = soup.find('p', attrs={'class': 'price'})
+    if product_price_text:
+        product_price_text = product_price_text.get_text(strip=True)
 
-    # sprawdzenie czy to zwykła cena
-    price_match = re.match(r'([\d,]+zł)', product_price_text)
-    if price_match:
-        product_current_price = (price_match.group(1))
+    # sprawdzenie czy to cena przeceniona
+    discount_match = re.search(r'Original price was:\s*([\d,]+)\s*zł.*?Current price is:\s*([\d,]+)\s*zł', 
+    product_price_text.replace('\xa0', ' ')
+    )
+    if discount_match:
+        product_original_price = discount_match.group(1) + "zł"
+        product_current_price = discount_match.group(2) + "zł"
     else:
         # sprawdzenie czy to zakres cen
         range_match = re.match(r'([\d,]+zł)–([\d,]+zł)', product_price_text)
         if range_match:
             product_current_price = (range_match.group(1), range_match.group(2))
-        
         else:
-            # sprawdzenie czy to cena przeceniona
-            discount_match = re.search(r'Original price was:\s*([\d,]+)\s*zł.*?Current price is:\s*([\d,]+)\s*zł', 
-            product_price_text.replace('\xa0', ' ')
-            )
-            if discount_match:
-                product_original_price = discount_match.group(1) + "zł"
-                product_current_price = discount_match.group(2) + "zł"
+            # sprawdzenie czy to zwykła cena
+            price_match = re.match(r'([\d,]+zł)', product_price_text)
+            if price_match:
+                product_current_price = (price_match.group(1))
         
 
     product_desc_meta_tag = soup.find('meta', attrs={'name': 'description'})
@@ -95,14 +98,43 @@ def extract_product(products_subpage_url: str, products_category: Category) -> P
     product_attributes = []
     if attributes_table:
         rows = attributes_table.find_all('tr')
-        for row in rows:
-            label = row.find('th').text.strip()
-            value = row.find('td').text.strip()
-            product_attributes.append((label, value))
+        if rows:
+            for row in rows:
+                label = row.find('th').text.strip()
+                value = row.find('td').text.strip()
+                product_attributes.append((label, value))
 
-    #TODO Dodac reszte atrybutow produktu (deal, discount, advises, weight)
+    #TODO Dodac reszte atrybutow produktu (deal)
 
-    return Product(name= product_name, original_price=product_original_price, new_price=product_current_price, link=products_subpage_url, desc=product_desc, img_uris=product_uris, category=products_category, attributes=product_attributes)
+    # szukanie przeceny na kwadraciku przy obrazku
+    product_discount = soup.find('div', class_='yith-wcbm yith-wcbm-sale-percent')
+    if product_discount:
+        product_discount = '-' + product_discount.get_text(strip=True) + '%'
+        pass
+    else:
+        product_discount = soup.find('div', class_='yith-wcbm-badge-text').get_text(strip=True)
+
+    # szukanie kontenera z obrazkami z poradami
+    product_advices_images = soup.find('div', class_='fusion-content-tb fusion-content-tb-1')
+    product_advices_urls = []
+    if product_advices_images:
+        product_advices_images = product_advices_images.find_all('img')
+        if product_advices_images:
+            # pobieranie linka do kazdego obrazka z porada
+            for advice_img in product_advices_images:
+                product_advices_urls.append(advice_img['data-orig-src'])
+
+    # szukanie wszystkich kwadracikow na obrazku
+    product_image_boxes = soup.find_all('div', class_='yith-wcbm-badge-text')
+    product_weight = None
+    if product_image_boxes:
+        for box in product_image_boxes:
+            box_text = box.get_text(strip=True)
+            # szukanie wagi na kwadraciku przy obrazku
+            if box_text[-1] == 'g':
+                product_weight = box_text
+        
+    return Product(name= product_name, original_price=product_original_price, new_price=product_current_price, link=products_subpage_url, desc=product_desc, img_uris=product_uris, category=products_category, attributes=product_attributes, discount=product_discount, advises=product_advices_urls, weight=product_weight)
 
 
 # funkcja pobiera dane o wszystkich produktach w kategorii (ich nazwę i cenę)
