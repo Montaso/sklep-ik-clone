@@ -2,6 +2,7 @@
 import os
 import requests
 from bs4 import BeautifulSoup
+import re
 from scrapper import env
 from scrapper.models.Category import Category
 from scrapper.models.Product import Product
@@ -51,10 +52,31 @@ def extract_product(products_subpage_url: str, products_category: Category) -> P
 
     product_name = soup.find('div', class_='fusion-title-2').get_text(strip=True)
 
-    #TODO rozdzielic ceny oryginalna od przecenionej
-    product_price = soup.find('p', attrs={'class': 'price'}).get_text(strip=True)
-    product_desc_meta_tag = soup.find('meta', attrs={'name': 'description'})
+    product_current_price = None
+    product_original_price = None
+    product_price_text = soup.find('p', attrs={'class': 'price'}).get_text(strip=True)
 
+    # sprawdzenie czy to zwykła cena
+    price_match = re.match(r'([\d,]+zł)', product_price_text)
+    if price_match:
+        product_current_price = (price_match.group(1))
+    else:
+        # sprawdzenie czy to zakres cen
+        range_match = re.match(r'([\d,]+zł)–([\d,]+zł)', product_price_text)
+        if range_match:
+            product_current_price = (range_match.group(1), range_match.group(2))
+        
+        else:
+            # sprawdzenie czy to cena przeceniona
+            discount_match = re.search(r'Original price was:\s*([\d,]+)\s*zł.*?Current price is:\s*([\d,]+)\s*zł', 
+            product_price_text.replace('\xa0', ' ')
+            )
+            if discount_match:
+                product_original_price = discount_match.group(1) + "zł"
+                product_current_price = discount_match.group(2) + "zł"
+        
+
+    product_desc_meta_tag = soup.find('meta', attrs={'name': 'description'})
     product_desc = None
     # opis produktu jest w atrybucie content w tagu <meta>
     if product_desc_meta_tag and 'content' in product_desc_meta_tag.attrs:
@@ -78,9 +100,9 @@ def extract_product(products_subpage_url: str, products_category: Category) -> P
             value = row.find('td').text.strip()
             product_attributes.append((label, value))
 
-    #TODO Dodac reszte atrybutow produktu 
+    #TODO Dodac reszte atrybutow produktu (deal, discount, advises, weight)
 
-    return Product(name= product_name, original_price=product_price, link=products_subpage_url, desc=product_desc, img_uris=product_uris, category=products_category, attributes=product_attributes)
+    return Product(name= product_name, original_price=product_original_price, new_price=product_current_price, link=products_subpage_url, desc=product_desc, img_uris=product_uris, category=products_category, attributes=product_attributes)
 
 
 # funkcja pobiera dane o wszystkich produktach w kategorii (ich nazwę i cenę)
@@ -112,4 +134,4 @@ def get_products_in_category(category: Category) -> [Product]:
 
 def append_with_communicate(product: Product, arr: [Product]):
     arr.append(product)
-    print(f"Exported product: {product.name} (category: {product.category})")
+    print(f"Exported product: {product.name} (category: {product.category})\n\toriginal_price: {product.original_price} new_price: {product.new_price}")
