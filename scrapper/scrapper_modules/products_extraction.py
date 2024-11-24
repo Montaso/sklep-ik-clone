@@ -110,9 +110,6 @@ def extract_product(products_subpage_url: str, products_category: Category) -> P
     product_discount = soup.find('div', class_='yith-wcbm yith-wcbm-sale-percent')
     if product_discount:
         product_discount = '-' + product_discount.get_text(strip=True) + '%'
-        pass
-    else:
-        product_discount = soup.find('div', class_='yith-wcbm-badge-text').get_text(strip=True)
 
     # szukanie kontenera z obrazkami z poradami
     product_advices_images = soup.find('div', class_='fusion-content-tb fusion-content-tb-1')
@@ -133,6 +130,9 @@ def extract_product(products_subpage_url: str, products_category: Category) -> P
             # szukanie wagi na kwadraciku przy obrazku
             if box_text[-1] == 'g':
                 product_weight = box_text
+            # jezeli znaleziono box z tekstem z % na koncu oznacza ze znalezlismy promocje
+            elif box_text[-1] == '%':
+                product_discount = box_text
         
     return Product(name= product_name, original_price=product_original_price, new_price=product_current_price, link=products_subpage_url, desc=product_desc, img_uris=product_uris, category=products_category, attributes=product_attributes, discount=product_discount, advises=product_advices_urls, weight=product_weight)
 
