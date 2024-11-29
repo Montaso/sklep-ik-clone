@@ -1,37 +1,46 @@
 services:
-  mysql:
-    image: mysql:9.1
-    container_name: sklepik-db
-    environment:
-      MYSQL_DATABASE: sklepik
-      MYSQL_ROOT_PASSWORD: r00t
+  nginx:
+    image: nginx:1.27.3
+    container_name: nginx
     ports:
-      - 3306:3306
+      - "8080:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./certs:/etc/nginx/ssl/
+    depends_on:
+      - prestashop
     networks:
       - sklepik-network
 
   prestashop:
     image: prestashop/prestashop:1.7.8
-    container_name: sklepik-prestashop
-    volumes:
-     - /prestashop.:/var/www/html
+    container_name: prestashop
     environment:
-      DB_SERVER: mysql
-    ports:
-      - 8080:80
+      - DB_SERVER=mysql
+    volumes:
+      - ./prestashop:/var/www/html
+
+  mysql:
+    image: mysql:9.1
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: r00t
+      MYSQL_DATABASE: sklepik
+    volumes:
+      - ./db_data:/var/lib/mysql
     networks:
       - sklepik-network
 
   phpmyadmin:
-    image: phpmyadmin
-    container_name: sklepik-phpmyadmin
-    ports:
-      - 12345:80
+    image: phpmyadmin:5.2.1
+    container_name: phpmyadmin
     environment:
       - PMA_ARBITRARY=1
+    ports:
+      - "9090:80"
     networks:
       - sklepik-network
-    
 
 networks:
   sklepik-network:
