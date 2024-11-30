@@ -1,60 +1,56 @@
 services:
-  nginx:
-    image: nginx:1.27.3
-    container_name: nginx
-    ports:
-      - "80:80"
-      - "443:443"
-      - "90:90"
-    volumes:
-      - ./default.conf:/etc/nginx/conf.d/default.conf
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./certs:/etc/nginx/ssl/
-    depends_on:
-      - prestashop
-    networks:
-      - sklepik-network
-
-  prestashop:
-    image: prestashop/prestashop:1.7.8
-    container_name: prestashop
-    volumes:
-      - ./prestashop:/var/www/html
-    environment:
-      - DB_SERVER=mysql
-      - DB_USER=root
-      - DB_PASS=kocham_biznes
-      - DB_NAME=sklepik
-    networks:
-      - sklepik-network
-
   mysql:
-    image: mysql:9
     container_name: mysql
-    volumes:
-      - mysql_presta_sklepik_data
+    image: mysql:9
     environment:
-      - MYSQL_ROOT_PASSWORD=kocham_biznes
-      - MYSQL_DATABASE=sklepik
+      MYSQL_ROOT_PASSWORD: kocham_biznes
+      MYSQL_DATABASE: sklepik
     networks:
-      - sklepik-network
-
+      - prestashop_network
+    volumes:
+      - ./dbdata:/var/lib/mysql
+  
   phpmyadmin:
-    image: phpmyadmin:5.2.1
     container_name: phpmyadmin
+    image: phpmyadmin:5.2.1
     environment:
       - PMA_HOST=mysql
       - PMA_USER=root
       - PMA_PASSWORD=kocham_biznes
     networks:
-      - sklepik-network 
+      - prestashop_network
+    depends_on:
+      - mysql
+  
+  prestashop:
+    container_name: prestashop
+    image: prestashop/prestashop:1.7.8
+    depends_on:
+      - mysql
+    ports:
+      - 8080:443
+    volumes:
+      - ./src:/var/www/html
+      - ./certs:/etc/ssl
+    environment:
+      DB_SERVER: mysql
+      DB_NAME: sklepik
+      DB_USER: root
+      DB_PASSWD: kocham_biznes
+      PS_LANGUAGE: ${PS_LANGUAGE:-pl}
+      PS_COUNTRY: ${PS_COUNTRY:-pl}
+      PS_DOMAIN: localhost:8080
+      PS_FOLDER_ADMIN: admin
+      PS_FOLDER_INSTALL: install
+      PS_DEV_MODE: 1
+      PS_INSTALL_AUTO: 1
+      ADMIN_MAIL: admin@admin.com
+      ADMIN_PASSWD: admin
+    networks:
+      - prestashop_network
 
 networks:
-  sklepik-network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 192.168.1.0/24
+  prestashop_network:
 
 volumes:
-  mysql_presta_sklepik_data:
+  presta-2:

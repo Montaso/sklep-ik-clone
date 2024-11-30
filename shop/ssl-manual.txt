@@ -1,0 +1,19 @@
+to musi byc w /etc/apache2/sites-avaialble/default-ssl.conf:
+<VirtualHost *:443>
+    ServerName localhost
+    DocumentRoot /var/www/html
+
+    SSLEngine on
+    SSLCertificateFile /etc/ssl/localhost.crt
+    SSLCertificateKeyFile /etc/ssl/localhost.key
+
+    <Directory /var/www/html>
+        AllowOverride All
+    </Directory>
+</VirtualHost>
+
+te komendy trzeba wrzucic:
+a2ensite default-ssl
+a2enmod sll
+service apache2 reload # do sprawdzenia czy wszystko dobrze ustawione, i tak trzeba zrestartowac
+service apache2 restart
