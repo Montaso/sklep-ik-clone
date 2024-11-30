@@ -19,16 +19,24 @@ services:
     container_name: prestashop
     volumes:
       - ./prestashop:/var/www/html
+    environment:
+      - DB_SERVER=sklepik-db.cfeeg2eouow5.eu-north-1.rds.amazonaws.com
+      - DB_USER=root
+      - DB_PASS=kocham_biznes
+      - DB_NAME=sklepik
     networks:
       - sklepik-network
 
   phpmyadmin:
     image: phpmyadmin:5.2.1
     container_name: phpmyadmin
-    networks:
-     - sklepik-network 
     environment:
-      - PMA_ARBITRARY=1
+      - PMA_HOST=sklepik-db.cfeeg2eouow5.eu-north-1.rds.amazonaws.com
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=kocham_biznes
+    networks:
+      - sklepik-network 
 
 networks:
   sklepik-network:
