@@ -9,6 +9,7 @@ services:
       - prestashop_network
     volumes:
       - ./dbdata:/var/lib/mysql
+      - ./dbdump:/var/lib/dbdump
   
   phpmyadmin:
     container_name: phpmyadmin
