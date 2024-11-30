@@ -1,0 +1,25 @@
+<?php return array (
+  'parameters' => 
+  array (
+    'database_host' => 'mysql',
+    'database_port' => '3306',
+    'database_name' => 'sklepik',
+    'database_user' => 'root',
+    'database_password' => 'kocham_biznes',
+    'database_prefix' => 'ps_',
+    'database_engine' => 'InnoDB',
+    'mailer_transport' => 'smtp',
+    'mailer_host' => '127.0.0.1',
+    'mailer_user' => NULL,
+    'mailer_password' => NULL,
+    'secret' => 'gsXf8R517b7cht4edVAoieiBqwOBNEpUFoXNzy7sIdHOt0Zq1BvwEP8G03kkphiN',
+    'ps_caching' => 'CacheMemcache',
+    'ps_cache_enable' => false,
+    'ps_creation_date' => '2024-11-30',
+    'locale' => 'pl-PL',
+    'use_debug_toolbar' => true,
+    'cookie_key' => 'Kx5feVMTWOamVeSWRnxpTLxfIGaLrxq5kGAs7vd2nNypNuEVTzF9h0ZsDfOsmu20',
+    'cookie_iv' => 'Kkw734HraDO1DzOIDs7DTXR2wGtyrbNS',
+    'new_cookie_key' => 'def0000065dbe8299a67caf8e92250ed086add432b575f4208c3a11e1969837012fa14e9f4a3c32e8464d693b9cb56eff30df71294add0223f648eda7b0103056b83d473',
+  ),
+);
