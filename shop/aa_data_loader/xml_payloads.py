@@ -26,17 +26,19 @@ def add_category_payload(
 
 
 def add_product_payload(
-        category_id: int,
-        price: int,
+        default_category_id: int,
+        price: float,
         enabled: bool,
         name: str,
         url: str,
         description: str,
-        short_description: str
+        short_description: str,
+        category_id: int,
+        state: int
 ) -> str:
     return f"""<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">
                   <product>
-                    <id_category_default><![CDATA[{category_id}]]></id_category_default>
+                    <id_category_default><![CDATA[{default_category_id}]]></id_category_default>
                     <price><![CDATA[{price}]]></price>
                     <active><![CDATA[{1 if enabled else 0}]]></active> 
                     <name>
@@ -51,6 +53,14 @@ def add_product_payload(
                     <description_short>
                       <language id="1"><![CDATA[{short_description}]]></language>
                     </description_short>
+                    <state><![CDATA[{state}]]></state>
+                    <associations>
+                      <categories>
+                        <category>
+                          <id><![CDATA[{category_id}]]></id>
+                        </category>
+                      </categories>
+                    </associations>
                   </product>
                 </prestashop>
                 """
