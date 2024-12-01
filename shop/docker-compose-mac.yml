@@ -1,0 +1,62 @@
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:8.0.33 
+    platform: linux/amd64 
+    environment:
+      MYSQL_ROOT_PASSWORD: kocham_biznes
+      MYSQL_DATABASE: sklepik
+    networks:
+      - prestashop_network
+    volumes:
+      - ./dbdata:/var/lib/mysql
+      - ./dbdump:/var/lib/dbdump
+  
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin:latest
+    platform: linux/amd64
+    environment:
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=kocham_biznes
+    networks:
+      - prestashop_network
+    depends_on:
+      - mysql
+    ports:
+      - 90:80
+  
+  prestashop:
+    container_name: prestashop
+    image: prestashop/prestashop:1.7.8
+    platform: linux/amd64 
+    depends_on:
+      - mysql
+    ports:
+      - 8080:443
+    volumes:
+      - ./src:/var/www/html
+      - ./certs:/etc/ssl
+    environment:
+      DB_SERVER: mysql
+      DB_NAME: sklepik
+      DB_USER: root
+      DB_PASSWD: kocham_biznes
+      PS_LANGUAGE: ${PS_LANGUAGE:-pl}
+      PS_COUNTRY: ${PS_COUNTRY:-pl}
+      PS_DOMAIN: localhost:8080
+      PS_FOLDER_ADMIN: admin
+      PS_FOLDER_INSTALL: install
+      PS_DEV_MODE: 1
+      PS_INSTALL_AUTO: 1
+      ADMIN_MAIL: admin@admin.com
+      ADMIN_PASSWD: admin
+    networks:
+      - prestashop_network
+
+networks:
+  prestashop_network:
+
+volumes:
+  presta-2:
