@@ -6,7 +6,7 @@ __pycache__
 General**
 
 /shop/src
-!/shop/src/themes
-!/shop/src/modules
-!/shop/src/config
-!/shop/src/img
+!/shop/src/themes/*
+!/shop/src/modules/*
+!/shop/src/config/*
+!/shop/src/img/*
