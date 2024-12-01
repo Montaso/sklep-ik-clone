@@ -6,23 +6,25 @@ def add_category_payload(
         link_rewrite: str
 ) -> str:
     return f"""<?xml version="1.0" encoding="UTF-8"?>
-<prestashop>
-  <category>
-    <id_parent><![CDATA[{id_parent}]]></id_parent>
-    <active><![CDATA[{active}]]></active>
-    <name>
-      <language id="1"><![CDATA[{name}]]></language>
-    </name>
-    <link_rewrite>
-      <language id="1"><![CDATA[{link_rewrite}]]></language>
-    </link_rewrite>
-    <description>
-<language id="1">
-<![CDATA[{description}]]>
-</language>
-</description>
-  </category>
-</prestashop>"""
+                <prestashop>
+                    <category>
+                        <id_parent>
+                            <![CDATA[{id_parent}]]>
+                        </id_parent>
+                    <active><![CDATA[{active}]]></active>
+                        <name>
+                            <language id="1"><![CDATA[{name}]]></language>
+                        </name>
+                    <link_rewrite>
+                        <language id="1"><![CDATA[{link_rewrite}]]></language>
+                    </link_rewrite>
+                        <description>
+                            <language id="1">
+                                <![CDATA[{description}]]>
+                            </language>
+                        </description>
+                    </category>
+                </prestashop>"""
 
 
 def add_product_payload(
