@@ -774,6 +774,7 @@ class CategoryCore extends ObjectModel
                 (isset($orderBy) ? $orderBy : '') .
                 (isset($limit) ? $limit : '')
             );
+        
 
         if (!Cache::isStored($cacheId)) {
             $result = Db::getInstance()->executeS(
