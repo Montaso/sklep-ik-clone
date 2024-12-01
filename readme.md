@@ -1,7 +1,7 @@
-# Blasters for masters (clone)
+# sklep-ik.pl (clone)
 
 ## Description
-<a href="https://blasters4masters.com/product-category/star-wars-weapon-replicas/">Blasters for masters</a> website clone using Prestashop.
+<a href="https://www.sklep-ik.pl/">sklep-ik.pl</a> website clone using Prestashop.
 
 ## Technologies
 - \<nazwa_technologii> - \<wersja>
