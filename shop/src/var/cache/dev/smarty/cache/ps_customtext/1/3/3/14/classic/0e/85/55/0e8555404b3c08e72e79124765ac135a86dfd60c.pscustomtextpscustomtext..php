@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 3.1.48, created on 2024-12-01 01:31:27
+/* Smarty version 3.1.48, created on 2024-12-01 17:11:01
   from 'module:pscustomtextpscustomtext.' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.48',
-  'unifunc' => 'content_674bae5f2a6d91_95491593',
+  'unifunc' => 'content_674c8a95da14b9_03160852',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -18,7 +18,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   ),
   'cache_lifetime' => 31536000,
 ),true)) {
-function content_674bae5f2a6d91_95491593 (Smarty_Internal_Template $_smarty_tpl) {
+function content_674c8a95da14b9_03160852 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!-- begin /var/www/html/modules/ps_customtext/ps_customtext.tpl -->
 <div id="custom-text">
   <h1><span style="color:#a31b6f;font-family:'Work Sans', Verdana, Geneva, sans-serif;font-size:14px;text-align:justify;background-color:#ffffff;">Sklep internetowy z włóczkami</span></h1>
