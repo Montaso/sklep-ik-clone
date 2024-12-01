@@ -3,4 +3,5 @@
 __pycache__
 venv
 
-/shop/prestashop/*
+/shop/dbdata/*
+General**
