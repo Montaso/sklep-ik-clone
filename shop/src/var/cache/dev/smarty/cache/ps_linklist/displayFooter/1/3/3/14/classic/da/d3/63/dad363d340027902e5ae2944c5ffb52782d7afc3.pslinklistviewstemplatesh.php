@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 3.1.48, created on 2024-11-30 23:45:09
+/* Smarty version 3.1.48, created on 2024-12-01 01:37:05
   from 'module:pslinklistviewstemplatesh' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.48',
-  'unifunc' => 'content_674b9575496db7_09551196',
+  'unifunc' => 'content_674bafb112c118_02086445',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -18,7 +18,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   ),
   'cache_lifetime' => 31536000,
 ),true)) {
-function content_674b9575496db7_09551196 (Smarty_Internal_Template $_smarty_tpl) {
+function content_674bafb112c118_02086445 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->smarty->ext->_tplFunction->registerTplFunctions($_smarty_tpl, array (
   'renderLogo' => 
   array (
@@ -30,9 +30,9 @@ $_smarty_tpl->smarty->ext->_tplFunction->registerTplFunctions($_smarty_tpl, arra
 ?><!-- begin /var/www/html/themes/classic/modules/ps_linklist/views/templates/hook/linkblock.tpl --><div class="col-md-6 links">
   <div class="row">
       <div class="col-md-6 wrapper">
-      <p class="h3 hidden-sm-down">Products</p>
+      <p class="h3 hidden-sm-down">Pomoc</p>
       <div class="title clearfix hidden-md-up" data-target="#footer_sub_menu_1" data-toggle="collapse">
-        <span class="h3">Products</span>
+        <span class="h3">Pomoc</span>
         <span class="float-xs-right">
           <span class="navbar-toggler collapse-icons">
             <i class="material-icons add">&#xE313;</i>
@@ -74,9 +74,9 @@ $_smarty_tpl->smarty->ext->_tplFunction->registerTplFunctions($_smarty_tpl, arra
               </ul>
     </div>
       <div class="col-md-6 wrapper">
-      <p class="h3 hidden-sm-down">Our company</p>
+      <p class="h3 hidden-sm-down">Informacje</p>
       <div class="title clearfix hidden-md-up" data-target="#footer_sub_menu_2" data-toggle="collapse">
-        <span class="h3">Our company</span>
+        <span class="h3">Informacje</span>
         <span class="float-xs-right">
           <span class="navbar-toggler collapse-icons">
             <i class="material-icons add">&#xE313;</i>

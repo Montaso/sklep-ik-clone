@@ -1,11 +1,11 @@
 <?php
-/* Smarty version 3.1.48, created on 2024-12-01 00:42:43
+/* Smarty version 3.1.48, created on 2024-12-01 01:21:30
   from 'module:psimagesliderviewstemplat' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.48',
-  'unifunc' => 'content_674ba2f3c21ca5_49685768',
+  'unifunc' => 'content_674bac0a6a7ba3_97763288',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
@@ -18,7 +18,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   ),
   'cache_lifetime' => 31536000,
 ),true)) {
-function content_674ba2f3c21ca5_49685768 (Smarty_Internal_Template $_smarty_tpl) {
+function content_674bac0a6a7ba3_97763288 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!-- begin /var/www/html/themes/classic/modules/ps_imageslider/views/templates/hook/slider.tpl -->
   <div id="carousel" data-ride="carousel" class="carousel slide" data-interval="5000" data-wrap="true" data-pause="hover" data-touch="true">
     <ol class="carousel-indicators">
@@ -30,11 +30,10 @@ function content_674ba2f3c21ca5_49685768 (Smarty_Internal_Template $_smarty_tpl)
               <li class="carousel-item active" role="option" aria-hidden="false">
           <a href="https://www.prestashop-project.org?utm_source=back-office&amp;utm_medium=v17_homeslider&amp;utm_campaign=back-office-PL&amp;utm_content=download">
             <figure>
-              <img src="https://localhost:8080/modules/ps_imageslider/images/sample-1.jpg" alt="O no, blikuj blikuj" loading="lazy" width="1110" height="340">
+              <img src="https://localhost:8080/modules/ps_imageslider/images/7cc50ca58020ab09694a7aa1cf7f951402501599_zimowa-wyprzedaz.jpg" alt="" loading="lazy" width="1110" height="340">
                               <figcaption class="caption">
-                  <h2 class="display-1 text-uppercase">DIOZ potrzebuje pieniędzy na pieski!</h2>
-                  <div class="caption-description"><h3>PIESKI POTRZEBUJĄ JEDZENIA</h3>
-<p>Jakub Burek Nurkiewicz nie może zasnąć przez brak snu, pomagajcie!!! -&gt; 787385642</p></div>
+                  <h2 class="display-1 text-uppercase">ZIMOWA WYPRZEDAŻ</h2>
+                  <div class="caption-description"><p>do wyczerpania zapasów</p></div>
                 </figcaption>
                           </figure>
           </a>
@@ -42,11 +41,10 @@ function content_674ba2f3c21ca5_49685768 (Smarty_Internal_Template $_smarty_tpl)
               <li class="carousel-item " role="option" aria-hidden="true">
           <a href="https://www.prestashop-project.org?utm_source=back-office&amp;utm_medium=v17_homeslider&amp;utm_campaign=back-office-PL&amp;utm_content=download">
             <figure>
-              <img src="https://localhost:8080/modules/ps_imageslider/images/sample-2.jpg" alt="sample-2" loading="lazy" width="1110" height="340">
+              <img src="https://localhost:8080/modules/ps_imageslider/images/fd4d0ba4ef9ba11d2ad5d795e06d8a0531c0633b_SST-ND.jpg" alt="" loading="lazy" width="1110" height="340">
                               <figcaption class="caption">
-                  <h2 class="display-1 text-uppercase">Sample 2</h2>
-                  <div class="caption-description"><h3>EXCEPTEUR OCCAECAT</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique in tortor et dignissim. Quisque non tempor leo. Maecenas egestas sem elit</p></div>
+                  <h2 class="display-1 text-uppercase">AKCJA OKAZJA</h2>
+                  <div class="caption-description"><p>limitowane oferty nawet 50% taniej</p></div>
                 </figcaption>
                           </figure>
           </a>
@@ -54,11 +52,10 @@ function content_674ba2f3c21ca5_49685768 (Smarty_Internal_Template $_smarty_tpl)
               <li class="carousel-item " role="option" aria-hidden="true">
           <a href="https://www.prestashop-project.org?utm_source=back-office&amp;utm_medium=v17_homeslider&amp;utm_campaign=back-office-PL&amp;utm_content=download">
             <figure>
-              <img src="https://localhost:8080/modules/ps_imageslider/images/sample-3.jpg" alt="sample-3" loading="lazy" width="1110" height="340">
+              <img src="https://localhost:8080/modules/ps_imageslider/images/365666aab6ac229e9ee7e49211aad33e9fd3240d_kiermasz.jpg" alt="" loading="lazy" width="1110" height="340">
                               <figcaption class="caption">
-                  <h2 class="display-1 text-uppercase">Sample 3</h2>
-                  <div class="caption-description"><h3>EXCEPTEUR OCCAECAT</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin tristique in tortor et dignissim. Quisque non tempor leo. Maecenas egestas sem elit</p></div>
+                  <h2 class="display-1 text-uppercase">ZIMOWY KIERMASZ RĘKODZIEŁA</h2>
+                  <div class="caption-description"><p>50% taniej do 15 grudnia</p></div>
                 </figcaption>
                           </figure>
           </a>
