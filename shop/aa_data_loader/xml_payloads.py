@@ -35,7 +35,8 @@ def add_product_payload(
         description: str,
         short_description: str,
         category_id: int,
-        state: int
+        state: int,
+        quantity: int
 ) -> str:
     return f"""<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">
                   <product>

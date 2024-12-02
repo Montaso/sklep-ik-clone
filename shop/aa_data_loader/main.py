@@ -1,13 +1,21 @@
 import csv
+import random
 
 from shop.aa_data_loader.Product import Product
 from xml_payloads import *
 from send import send, get_blank_schema
+import repository
 
-# payload = add_category_payload(2, 1, "test_name", "test_desc", "test_link")
-# send(payload, "categories")
+SEND_CATEGORIES = False
+UPLOAD_IMAGES = False
 
+if SEND_CATEGORIES:
+    categories_csv = '../../data/test/categories.csv'
+    repository.add_all_categories(categories_csv)
+
+categories = repository.get_all_categories_ids()
 PATH_PRODUCTS_CSV = '../../scrapper/data/test/products.csv'
+
 products = []
 with (open(PATH_PRODUCTS_CSV, mode='r', encoding='utf-8') as csv_file):
     csv_reader = csv.DictReader(csv_file, delimiter=';')
@@ -37,24 +45,24 @@ with (open(PATH_PRODUCTS_CSV, mode='r', encoding='utf-8') as csv_file):
         )
 
         products.append(product)
-        print(product)
 
 for product in products:
-    default_category_id = 999999 # unknown yet
+    default_category_id = categories[product.category]
     new_price = product.new_price
     active = True # czy produkt jest dostępny
     name = product.name
     url = product.link
     desc = product.desc
     short_desc = '???' # i dont know what to put here
-    category_id = 999999 # unknown yet
+    category_id = categories[product.category]
     state = 1 # no info
     img_uris = product.img_uris
+    quantity = random.randint(0,20) # for some reason adding quantity in payload makes response 400
 
     payload = add_product_payload(default_category_id, new_price, active, name,
-                                  url, desc, short_desc, category_id, state)
-    send(payload, "products", img_uris)
-    break
+                                  url, desc, short_desc, category_id, state, quantity)
+    send(payload, "products", img_uris, UPLOAD_IMAGES)
+
 
 
 

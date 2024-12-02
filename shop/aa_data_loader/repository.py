@@ -9,14 +9,17 @@ def get_all_categories_ids():
     cat = send_get("categories").text
     root = ET.fromstring(cat)
 
-    categories_element = root.find("categories")
-    categories = categories_element.findall('category')
+    categories = root.findall(".//category")
 
-    ids = []
+    category_data = {}
     for category in categories:
-        category_id = category.attrib["id"]
-        ids.append(int(category_id))
-    return ids
+        category_id = int(category.find('id').text)
+        name_element = category.find("name/language")
+        category_name = name_element.text.strip() if name_element is not None else None
+
+        if category_name:
+            category_data[category_name] = category_id
+    return category_data
 
 
 def add_all_categories(csv_path: str):
