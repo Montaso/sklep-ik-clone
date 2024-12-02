@@ -4,7 +4,7 @@ ENV_TEST = True
 
 # for test env
 PATH_SAVE_DIRECTORY = "./data/test"
-MAX_CATEGORIES = 5
+MAX_CATEGORIES = 1000000
 
 # for prod env
 if not ENV_TEST:
@@ -17,4 +17,6 @@ IMG_SUBDIRECTORY_NAME = "img"
 PATH_CATEGORIES_CSV = os.path.join(PATH_SAVE_DIRECTORY, "categories.csv")
 PATH_PRODUCTS_CSV = os.path.join(PATH_SAVE_DIRECTORY, "products.csv")
 IMG_PER_PRODUCT = 2
+
+
 

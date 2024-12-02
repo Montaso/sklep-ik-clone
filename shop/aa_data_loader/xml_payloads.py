@@ -1,3 +1,7 @@
+from requests.auth import HTTPBasicAuth
+
+import send
+
 # def add_category_payload(
 #         id_parent: int,
 #         active: bool,
@@ -73,6 +77,7 @@
 # </associations>
 # </category>
 # </prestashop>"""
+import requests
 
 
 def add_product_payload(
@@ -123,4 +128,3 @@ def add_product_payload(
     #       </category>
     #     </categories>
     #   </associations>
-
