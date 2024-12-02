@@ -108,7 +108,7 @@ class Ps_MainMenu extends Module implements WidgetInterface
 
                 return true;
             }
-            if (!$this->installDb() || !Configuration::updateGlobalValue('MOD_BLOCKTOPMENU_ITEMS', 'CAT3,CAT6,CAT9')) {
+            if (!$this->installDb() || !Configuration::updateGlobalValue('MOD_BLOCKTOPMENU_ITEMS', 'CAT3,CAT6,CAT9,CAT10')) {
                 return false;
             }
         }
@@ -754,8 +754,10 @@ class Ps_MainMenu extends Module implements WidgetInterface
     protected function generateCategoriesMenu($categories, $is_children = 0)
     {
         $nodes = [];
-
+        
         foreach ($categories as $key => $category) {
+            $message = $category['name'];
+            echo "<script>console.log('" . addslashes($message) . "');</script>";
             $node = $this->makeNode([]);
             if ($category['level_depth'] > 1) {
                 $cat = new Category($category['id_category']);
@@ -1474,19 +1476,21 @@ class Ps_MainMenu extends Module implements WidgetInterface
         $cacheDir = $this->getCacheDirectory();
         $cacheFile = $cacheDir . DIRECTORY_SEPARATOR . $key;
         $menu = json_decode(@file_get_contents($cacheFile), true);
-        if (!is_array($menu) || json_last_error() !== JSON_ERROR_NONE) {
+
+        //$message = "return items";
+        //echo "<script>console.log('" . addslashes($message) . "');</script>";
+        //if (!is_array($menu) || json_last_error() !== JSON_ERROR_NONE) {
             $menu = $this->makeMenu();
             if (!is_dir($cacheDir)) {
                 mkdir($cacheDir);
             }
             file_put_contents($cacheFile, json_encode($menu));
-        }
+        //}
 
         $page_identifier = $this->getCurrentPageIdentifier();
         // Mark the current page
         return $this->mapTree(function (array $node) use ($page_identifier) {
             $node['current'] = ($page_identifier === $node['page_identifier']);
-
             return $node;
         }, $menu);
     }
@@ -1496,7 +1500,7 @@ class Ps_MainMenu extends Module implements WidgetInterface
         $this->smarty->assign([
             'menu' => $this->getWidgetVariables($hookName, $configuration),
         ]);
-
+        
         return $this->fetch('module:ps_mainmenu/ps_mainmenu.tpl');
     }
 }

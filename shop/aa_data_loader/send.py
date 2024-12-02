@@ -13,7 +13,7 @@ base_url = "https://localhost:8080/api/"
 
 headers = {
     "Authorization": f"Basic {api_key}",
-    "Content-Type": "application/xml"
+    "Content-Type": "application/xml; charset=UTF-8",
 }
 
 
@@ -67,15 +67,15 @@ def send(payload: str, endpoint: str, img_uris):
     response = requests.post(
         f"{base_url}{endpoint}",
         headers=headers,
-        data=payload,
+        data=payload.encode('utf-8'),
         auth=HTTPBasicAuth(api_key, ""),
         verify=False
     )
 
     if response.status_code == 201:
         print("Product added successfully!")
-        root = ET.fromstring(response.text)  # Parse XML from the response
-        product_id = int(root.find(".//id").text)  # Find the <id> element inside the <product> tag
+        root = ET.fromstring(response.text)
+        product_id = int(root.find(".//id").text) 
         print("Product ID:", product_id)
         if product_id:
             upload_product_images(product_id, img_uris)
@@ -85,3 +85,28 @@ def send(payload: str, endpoint: str, img_uris):
         print("Failed to add product.")
         print(f"Status Code: {response.status_code}")
         print(response.text)
+
+def send_get(endpoint: str):
+    return requests.get(
+        f"{base_url}{endpoint}",
+        headers=headers,
+        auth=HTTPBasicAuth(api_key, ""),
+        verify=False
+    )
+
+
+def send_post(payload: str, endpoint: str):
+    response = requests.post(
+        f"{base_url}{endpoint}",
+        headers=headers,
+        data=payload.encode('utf-8'),
+        auth=HTTPBasicAuth(api_key, ""),
+        verify=False
+    )
+
+    if response.status_code == 201:
+        return response
+    else:
+        print(f"--------- Failed ({response.status_code}). Payload: ---------\n{payload}")
+
+
