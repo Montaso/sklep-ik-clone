@@ -10,7 +10,7 @@ base_url = "https://localhost:8080/api/"
 
 headers = {
     "Authorization": f"Basic {api_key}",
-    "Content-Type": "application/xml"
+    "Content-Type": "application/xml; charset=UTF-8",
 }
 
 
@@ -24,19 +24,27 @@ def get_blank_schema(endpoint: str):
     return response.raw
 
 
-def send(payload: str, endpoint: str):
+def send_get(endpoint: str):
+    return requests.get(
+        f"{base_url}{endpoint}",
+        headers=headers,
+        auth=HTTPBasicAuth(api_key, ""),
+        verify=False
+    )
+
+
+def send_post(payload: str, endpoint: str):
     response = requests.post(
         f"{base_url}{endpoint}",
         headers=headers,
-        data=payload,
+        data=payload.encode('utf-8'),
         auth=HTTPBasicAuth(api_key, ""),
         verify=False
     )
 
     if response.status_code == 201:
-        print("Product added successfully!")
-        print(response.text)
+        return response
     else:
-        print("Failed to add product.")
-        print(f"Status Code: {response.status_code}")
-        print(response.text)
+        print(f"--------- Failed ({response.status_code}). Payload: ---------\n{payload}")
+
+

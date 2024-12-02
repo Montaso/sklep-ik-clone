@@ -8,16 +8,15 @@ def add_category_payload(
     return f"""<?xml version="1.0" encoding="UTF-8"?>
                 <prestashop>
                     <category>
-                        <id_parent>
-                            <![CDATA[{id_parent}]]>
-                        </id_parent>
-                    <active><![CDATA[{active}]]></active>
+                        <id_parent><![CDATA[{id_parent}]]></id_parent>
+                        <active><![CDATA[1]]></active>
+                            <active><![CDATA[{active}]]></active>
                         <name>
                             <language id="1"><![CDATA[{name}]]></language>
                         </name>
-                    <link_rewrite>
-                        <language id="1"><![CDATA[{link_rewrite}]]></language>
-                    </link_rewrite>
+                        <link_rewrite>
+                            <language id="1"><![CDATA[{link_rewrite}]]></language>
+                        </link_rewrite>
                         <description>
                             <language id="1">
                                 <![CDATA[{description}]]>
