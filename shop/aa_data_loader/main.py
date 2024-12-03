@@ -13,6 +13,7 @@ SEND_CATEGORIES = False
 UPLOAD_IMAGES = False
 PATH_PRODUCTS_CSV = '../../data/prod/products.csv'
 PATH_CATEGORIES_CSV = '../../data/prod/categories.csv'
+PRODUCTS_PER_CATEGORY = 1
 
 def add_categories_to_shop():
     repository.add_all_categories(PATH_CATEGORIES_CSV)
@@ -25,7 +26,9 @@ def get_all_products():
 
         for row in csv_reader:
             if row.get('new_price')[0] == '(':
-                continue
+                parts = row.get('new_price').split(",")
+                row['new_price'] = parts[0] + ',' + parts[1]
+                row['new_price'] = row.get('new_price').strip(" ('\"")
             if row.get('discount').strip() == 'Non' or row.get('discount').strip() == 'None':
                 row['discount'] = '0%'
             if row.get('weight').strip() == 'Non' or row.get('weight').strip() == 'None':
@@ -128,7 +131,7 @@ def add_products_to_shop(products: list[Product], categories: dict[str:int]):
     items_added_to_category = 0
     added_products_count = 0
     for product in products:
-        if items_added_to_category >= 1:
+        if items_added_to_category >= PRODUCTS_PER_CATEGORY:
             if product.category != last_category:
                 items_added_to_category = 0
             else:
