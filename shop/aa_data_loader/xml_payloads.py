@@ -33,16 +33,20 @@ def add_product_payload(
         name: str,
         url: str,
         description: str,
-        short_description: str,
         category_id: int,
         state: int,
-        quantity: int
+        weight: int,
+        producer_id: int,
+        desc_short: str,
+        main_site: bool
 ) -> str:
     return f"""<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">
                   <product>
                     <id_category_default><![CDATA[{default_category_id}]]></id_category_default>
                     <price><![CDATA[{price}]]></price>
                     <active><![CDATA[{1 if enabled else 0}]]></active> 
+                    <available_for_order>1</available_for_order>
+                    <weight><![CDATA[{weight}]]></weight>
                     <name>
                       <language id="1"><![CDATA[{name}]]></language>
                     </name>
@@ -51,16 +55,20 @@ def add_product_payload(
                     </link_rewrite>
                     <description>
                       <language id="1"><![CDATA[{description}]]></language>
+                      <description_short><![CDATA[{desc_short}]]></description_short>
                     </description>
-                    <description_short>
-                      <language id="1"><![CDATA[{short_description}]]></language>
-                    </description_short>
                     <state><![CDATA[{state}]]></state>
                     <associations>
                       <categories>
                         <category>
                           <id><![CDATA[{category_id}]]></id>
                         </category>
+                        {f"<category> \
+                          <id><![CDATA[{producer_id}]]></id> \
+                        </category>" if producer_id is not None else ''}
+                        {f"<category> \
+                          <id><![CDATA[2]]></id> \
+                        </category>" if main_site else ''}
                       </categories>
                     </associations>
                   </product>

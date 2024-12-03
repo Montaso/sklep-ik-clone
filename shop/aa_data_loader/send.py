@@ -3,7 +3,6 @@ import os
 import requests
 from requests.auth import HTTPBasicAuth
 import urllib3
-import xml.etree.ElementTree as ET
 
 # disable self-signed ssl warning
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -65,11 +64,12 @@ def upload_product_images(product_id: int, img_uris: list):
         if download_image(img_url, file_name):
             upload_product_image(product_id, file_name)
             os.remove(file_name)
+            print(f"Uploaded image {img_url} successfully.")
         else:
             print(f"Skipping upload for {img_url} due to download failure.")
 
 
-def send(payload: str, endpoint: str, img_uris, upload_images: bool = False):
+def send(payload: str, endpoint: str):
     response = requests.post(
         f"{base_url}{endpoint}",
         headers=headers,
@@ -78,19 +78,7 @@ def send(payload: str, endpoint: str, img_uris, upload_images: bool = False):
         verify=False
     )
 
-    if response.status_code == 201:
-        print("Product added successfully!")
-        root = ET.fromstring(response.text)
-        product_id = int(root.find(".//id").text) 
-        print("Product ID:", product_id)
-        if product_id:
-            if upload_images:
-                upload_product_images(product_id, img_uris)
-        else:
-            print('no id')
-    else:
-        print("Failed to add product.")
-        print(f"Status Code: {response.status_code}")
+    return response
 
 def send_get(endpoint: str):
     return requests.get(
