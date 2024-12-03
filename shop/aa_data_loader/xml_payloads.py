@@ -35,7 +35,10 @@ def add_product_payload(
         description: str,
         category_id: int,
         state: int,
-        weight: int
+        weight: int,
+        producer_id: int,
+        desc_short: str,
+        main_site: bool
 ) -> str:
     return f"""<prestashop xmlns:xlink="http://www.w3.org/1999/xlink">
                   <product>
@@ -52,6 +55,7 @@ def add_product_payload(
                     </link_rewrite>
                     <description>
                       <language id="1"><![CDATA[{description}]]></language>
+                      <description_short><![CDATA[{desc_short}]]></description_short>
                     </description>
                     <state><![CDATA[{state}]]></state>
                     <associations>
@@ -59,6 +63,12 @@ def add_product_payload(
                         <category>
                           <id><![CDATA[{category_id}]]></id>
                         </category>
+                        {f"<category> \
+                          <id><![CDATA[{producer_id}]]></id> \
+                        </category>" if producer_id is not None else ''}
+                        {f"<category> \
+                          <id><![CDATA[2]]></id> \
+                        </category>" if main_site else ''}
                       </categories>
                     </associations>
                   </product>

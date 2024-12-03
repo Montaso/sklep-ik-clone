@@ -9,12 +9,13 @@ import send
 import repository
 import xml.etree.ElementTree as ET
 
-SEND_CATEGORIES = True
+SEND_CATEGORIES = False
 UPLOAD_IMAGES = False
 PATH_PRODUCTS_CSV = '../../data/prod/products.csv'
+PATH_CATEGORIES_CSV = '../../data/prod/categories.csv'
 
 def add_categories_to_shop():
-    repository.add_all_categories(PATH_PRODUCTS_CSV)
+    repository.add_all_categories(PATH_CATEGORIES_CSV)
 
 
 def get_all_products():
@@ -26,9 +27,9 @@ def get_all_products():
             if row.get('new_price')[0] == '(':
                 continue
             if row.get('discount').strip() == 'Non' or row.get('discount').strip() == 'None':
-                continue
+                row['discount'] = '0%'
             if row.get('weight').strip() == 'Non' or row.get('weight').strip() == 'None':
-                continue
+                row['weight'] = '0g'
 
             new_price = float(row.get('new_price')[:-2].replace(",", "."))
             product = Product(
@@ -110,27 +111,67 @@ def get_stock_id(product_id):
     return None
 
 
+def get_producer(product: Product):
+    attributes: list[str] = product.attributes
+    load_producer = False
+
+    for attribute in attributes:
+        if load_producer:
+            producer = attribute.strip(' \')]').upper()
+            return producer
+        if attribute == ' (\'Producent\'':
+            load_producer = True
+
+
 def add_products_to_shop(products: list[Product], categories: dict[str:int]):
+    last_category = ""
+    items_added_to_category = 0
+    added_products_count = 0
     for product in products:
+        if items_added_to_category >= 1:
+            if product.category != last_category:
+                items_added_to_category = 0
+            else:
+                continue
+
         default_category_id = categories[product.category]
         new_price = product.new_price
         active = True  # czy produkt jest dostępny
         name = product.name
         url = product.link
         desc = product.desc
+        short_desc = (''.join(product.attributes)
+                      .replace('[','')
+                      .replace(']', '')
+                      .replace('(', '')
+                      .replace(')', '')
+                      .replace('\'', ''))
+        main_site = True if added_products_count < 12 else False
         category_id = categories[product.category]
+        if get_producer(product) in categories:
+            producer_id = categories[get_producer(product)]
+        else:
+            producer_id = None
+
         state = 1
         img_uris = product.img_uris
-        quantity = random.randint(1, 20)
+        quantity = random.randint(0, 10)
         weight = product.weight
+        last_category = product.category
 
         payload = add_product_payload(default_category_id, new_price, active, name,
                                       url, desc, category_id, state,
-                                      weight)
+                                      weight, producer_id, short_desc, main_site)
         response = send.send(payload, "products")
 
         if response.status_code == 201:
             print('added product succesfully')
+            added_products_count += 1
+            print(f'Added product number {added_products_count}')
+            if product.category == last_category:
+                items_added_to_category += 1
+            else:
+                items_added_to_category = 0
         else:
             print('failed to add product')
 
