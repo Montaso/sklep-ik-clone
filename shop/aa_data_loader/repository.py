@@ -19,6 +19,13 @@ def get_all_categories_ids():
 
         if category_name:
             category_data[category_name] = category_id
+
+    categories_element = root.find("categories")
+    categories = categories_element.findall('category')
+    ids = []
+    for category in categories:
+        category_id = category.attrib['id']
+        ids.append(int(category_id))
     return category_data
 
 
