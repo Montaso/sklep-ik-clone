@@ -1,0 +1,42 @@
+package com.example.login;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.safari.SafariDriver;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter @Setter
+public class LoginHandle {
+    private WebDriver driver;
+    private final String loginLink = "https://localhost:8080/logowanie";
+
+    private final String emailId = "field-email";
+    private final String passwordId = "field-password";
+    private final String submitId = "submit-login";
+
+    private final String email = "matip04@gmail.com";
+    private final String password = "marcinek123";
+
+    public LoginHandle (WebDriver driver) {
+        this.driver = driver;
+    }
+
+    public void run() throws InterruptedException {
+        driver.get(loginLink);
+
+        WebElement emailField = driver.findElement(By.id(emailId));
+        emailField.sendKeys(email);
+
+        WebElement passwordField = driver.findElement(By.id(passwordId));
+        passwordField.sendKeys(password);
+
+        driver.findElement(By.id(submitId)).click();
+
+
+    }
+}
