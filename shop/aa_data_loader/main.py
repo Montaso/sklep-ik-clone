@@ -9,8 +9,8 @@ import send
 import repository
 import xml.etree.ElementTree as ET
 
-SEND_CATEGORIES = False
-UPLOAD_IMAGES = False
+SEND_CATEGORIES = True
+UPLOAD_IMAGES = True
 PRODUCTS_PER_CATEGORY = 1000
 PATH_PRODUCTS_CSV = 'data/prod/products.csv'
 PATH_CATEGORIES_CSV = 'data/prod/categories.csv'
@@ -25,6 +25,8 @@ def get_all_products():
         csv_reader = csv.DictReader(csv_file, delimiter=';')
 
         for row in csv_reader:
+            if row.get('new_price') == "None":
+                continue
             if row.get('new_price')[0] == '(':
                 parts = row.get('new_price').split(",")
                 row['new_price'] = parts[0] + ',' + parts[1]
