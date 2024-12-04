@@ -4,7 +4,7 @@ from models import Category
 
 
 # supports only 'a' and 'w' open modes
-def save(obj_arr: [object], save_path: str, open_mode='w'):
+def save(obj_arr: [object], save_path: str, open_mode='a'):
     if (open_mode == 'a' and not os.path.exists(save_path)) or open_mode == 'w':
         with open(save_path, open_mode, encoding="utf-8") as file:
             file.write(f"{get_csv_title_row(obj_arr[0])}\n")
