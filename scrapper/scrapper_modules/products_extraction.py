@@ -148,6 +148,7 @@ def get_products_in_category(category: Category) -> [Product]:
     if category.link is None:
         return []
 
+    cnt = 0
     result_products: [Product] = []
 
     response = requests.get(category.link)
@@ -167,6 +168,10 @@ def get_products_in_category(category: Category) -> [Product]:
                 result_products.append(product)
         except Exception as e:
             print("Can't extract product: ", e, "\nURL:\n", product_link)
+
+        cnt += 1
+        if cnt >= env.MAX_PRODUCTS_PER_CATEGORY:
+            break
 
     return result_products
 

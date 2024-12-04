@@ -18,5 +18,8 @@ PATH_CATEGORIES_CSV = os.path.join(PATH_SAVE_DIRECTORY, "categories.csv")
 PATH_PRODUCTS_CSV = os.path.join(PATH_SAVE_DIRECTORY, "products.csv")
 IMG_PER_PRODUCT = 2
 
+MAX_PRODUCTS_PER_CATEGORY = 1
+ONLY_ONE_WOOL = True
+
 
 

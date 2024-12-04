@@ -14,13 +14,14 @@ def main():
 
     for category in categories:
         # this ensures only one wool is downloaded - testing
-        #
-        # if (category.name != "ESTOŃSKA WEŁNA ARTYSTYCZNA 8-1" and
-        #        ((category.parent_category is not None and category.parent_category.name == "Włóczki") or
-        #        (category.parent_category is not None and category.parent_category.parent_category is not None
-        #        and category.parent_category.parent_category.name == "Włóczki"))):
-        #    print(f"skipping {category.name}")
-        #    continue
+        if (env.ONLY_ONE_WOOL
+                and category.name != "ESTOŃSKA WEŁNA ARTYSTYCZNA 8-1"
+                and ((category.parent_category is not None and category.parent_category.name == "Włóczki") or
+                (category.parent_category is not None and category.parent_category.parent_category is not None
+                and category.parent_category.parent_category.name == "Włóczki"))):
+            print(f"skipping {category.name}")
+            continue
+
         products = get_products_in_category(category)
         if products:
             save(products, env.PATH_PRODUCTS_CSV)
