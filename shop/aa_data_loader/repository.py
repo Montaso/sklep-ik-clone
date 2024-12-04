@@ -1,8 +1,8 @@
-from shop.aa_data_loader.models.category import load_categories, Category
-from shop.aa_data_loader.send import send_get, send_post
+from models.category import load_categories, Category
+from send import send_get, send_post
 import xml.etree.ElementTree as ET
 
-from shop.aa_data_loader.xml_payloads import add_category_payload
+from xml_payloads import add_category_payload
 
 
 def get_all_categories_ids():

@@ -3,7 +3,7 @@ import random
 
 import requests
 
-from shop.aa_data_loader.Product import Product
+from Product import Product
 from xml_payloads import *
 import send
 import repository
@@ -11,9 +11,9 @@ import xml.etree.ElementTree as ET
 
 SEND_CATEGORIES = False
 UPLOAD_IMAGES = False
-PATH_PRODUCTS_CSV = '../../data/prod/products.csv'
-PATH_CATEGORIES_CSV = '../../data/prod/categories.csv'
-PRODUCTS_PER_CATEGORY = 1
+PRODUCTS_PER_CATEGORY = 1000
+PATH_PRODUCTS_CSV = 'data/prod/products.csv'
+PATH_CATEGORIES_CSV = 'data/prod/categories.csv'
 
 def add_categories_to_shop():
     repository.add_all_categories(PATH_CATEGORIES_CSV)
