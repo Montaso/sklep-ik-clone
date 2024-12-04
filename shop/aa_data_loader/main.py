@@ -13,7 +13,7 @@ SEND_CATEGORIES = False
 UPLOAD_IMAGES = False
 PATH_PRODUCTS_CSV = '../../data/prod/products.csv'
 PATH_CATEGORIES_CSV = '../../data/prod/categories.csv'
-PRODUCTS_PER_CATEGORY = 1
+PRODUCTS_PER_CATEGORY = 2
 
 def add_categories_to_shop():
     repository.add_all_categories(PATH_CATEGORIES_CSV)
@@ -130,7 +130,13 @@ def add_products_to_shop(products: list[Product], categories: dict[str:int]):
     last_category = ""
     items_added_to_category = 0
     added_products_count = 0
+    i = 0
     for product in products:
+        if i % 2 == 1:
+            i += 1
+            continue
+        else:
+            i += 1
         if items_added_to_category >= PRODUCTS_PER_CATEGORY:
             if product.category != last_category:
                 items_added_to_category = 0
