@@ -6,7 +6,7 @@
 ## Technologies
 - \<Prestashop> - \<1.7.8>
 - \<MySql> - \<8.0.33>
-- \phpMyAdmin> - \<5.2.1>
+- \<phpMyAdmin> - \<5.2.1>
 - \<Selenium> - \<4.27.0>
 - \<Java> - \<17>
 - \<Python> - \<3.12.0>
