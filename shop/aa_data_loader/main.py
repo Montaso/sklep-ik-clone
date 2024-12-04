@@ -9,8 +9,8 @@ import send
 import repository
 import xml.etree.ElementTree as ET
 
-SEND_CATEGORIES = False
-UPLOAD_IMAGES = False
+SEND_CATEGORIES = True
+UPLOAD_IMAGES = True
 PRODUCTS_PER_CATEGORY = 1000
 PATH_PRODUCTS_CSV = 'data/prod/products.csv'
 PATH_CATEGORIES_CSV = 'data/prod/categories.csv'
@@ -25,6 +25,8 @@ def get_all_products():
         csv_reader = csv.DictReader(csv_file, delimiter=';')
 
         for row in csv_reader:
+            if row.get('new_price') == "None":
+                continue
             if row.get('new_price')[0] == '(':
                 parts = row.get('new_price').split(",")
                 row['new_price'] = parts[0] + ',' + parts[1]
@@ -130,7 +132,13 @@ def add_products_to_shop(products: list[Product], categories: dict[str:int]):
     last_category = ""
     items_added_to_category = 0
     added_products_count = 0
+    i = 0
     for product in products:
+        if i % 2 == 1:
+            i += 1
+            continue
+        else:
+            i += 1
         if items_added_to_category >= PRODUCTS_PER_CATEGORY:
             if product.category != last_category:
                 items_added_to_category = 0
