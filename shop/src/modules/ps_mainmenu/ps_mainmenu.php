@@ -754,10 +754,8 @@ class Ps_MainMenu extends Module implements WidgetInterface
     protected function generateCategoriesMenu($categories, $is_children = 0)
     {
         $nodes = [];
-        
+
         foreach ($categories as $key => $category) {
-            $message = $category['name'];
-            echo "<script>console.log('" . addslashes($message) . "');</script>";
             $node = $this->makeNode([]);
             if ($category['level_depth'] > 1) {
                 $cat = new Category($category['id_category']);
@@ -1476,16 +1474,13 @@ class Ps_MainMenu extends Module implements WidgetInterface
         $cacheDir = $this->getCacheDirectory();
         $cacheFile = $cacheDir . DIRECTORY_SEPARATOR . $key;
         $menu = json_decode(@file_get_contents($cacheFile), true);
-
-        //$message = "return items";
-        //echo "<script>console.log('" . addslashes($message) . "');</script>";
-        //if (!is_array($menu) || json_last_error() !== JSON_ERROR_NONE) {
+        if (!is_array($menu) || json_last_error() !== JSON_ERROR_NONE) {
             $menu = $this->makeMenu();
             if (!is_dir($cacheDir)) {
                 mkdir($cacheDir);
             }
             file_put_contents($cacheFile, json_encode($menu));
-        //}
+        }
 
         $page_identifier = $this->getCurrentPageIdentifier();
         // Mark the current page
@@ -1500,7 +1495,6 @@ class Ps_MainMenu extends Module implements WidgetInterface
         $this->smarty->assign([
             'menu' => $this->getWidgetVariables($hookName, $configuration),
         ]);
-        
         return $this->fetch('module:ps_mainmenu/ps_mainmenu.tpl');
     }
 }
