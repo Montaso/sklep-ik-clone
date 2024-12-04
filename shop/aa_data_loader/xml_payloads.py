@@ -35,7 +35,7 @@ def add_product_payload(
         description: str,
         category_id: int,
         state: int,
-        weight: int,
+        weight: float,
         producer_id: int,
         desc_short: str,
         main_site: bool
@@ -46,7 +46,7 @@ def add_product_payload(
                     <price><![CDATA[{price}]]></price>
                     <active><![CDATA[{1 if enabled else 0}]]></active> 
                     <available_for_order>1</available_for_order>
-                    <weight><![CDATA[{weight}]]></weight>
+                    <weight><![CDATA[{float(weight/1000.)}]]></weight>
                     <show_price>1</show_price>
                     <name>
                       <language id="1"><![CDATA[{name}]]></language>
