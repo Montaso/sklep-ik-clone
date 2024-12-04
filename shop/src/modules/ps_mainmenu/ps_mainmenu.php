@@ -108,7 +108,7 @@ class Ps_MainMenu extends Module implements WidgetInterface
 
                 return true;
             }
-            if (!$this->installDb() || !Configuration::updateGlobalValue('MOD_BLOCKTOPMENU_ITEMS', 'CAT3,CAT6,CAT9')) {
+            if (!$this->installDb() || !Configuration::updateGlobalValue('MOD_BLOCKTOPMENU_ITEMS', 'CAT3,CAT6,CAT9,CAT10')) {
                 return false;
             }
         }
@@ -1486,7 +1486,6 @@ class Ps_MainMenu extends Module implements WidgetInterface
         // Mark the current page
         return $this->mapTree(function (array $node) use ($page_identifier) {
             $node['current'] = ($page_identifier === $node['page_identifier']);
-
             return $node;
         }, $menu);
     }
@@ -1496,7 +1495,6 @@ class Ps_MainMenu extends Module implements WidgetInterface
         $this->smarty->assign([
             'menu' => $this->getWidgetVariables($hookName, $configuration),
         ]);
-
         return $this->fetch('module:ps_mainmenu/ps_mainmenu.tpl');
     }
 }

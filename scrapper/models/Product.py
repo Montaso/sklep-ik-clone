@@ -1,4 +1,4 @@
-from scrapper.models import Attribute, Category
+from models import Attribute, Category
 
 
 class Product:

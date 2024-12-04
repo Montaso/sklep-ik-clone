@@ -215,7 +215,7 @@
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 #content.bootstrap .btn.btn-primary {
-    background-color: #00b9d9;
+    background-color: rgb(186, 47, 186);
     color: #fff;
 }
 #content.bootstrap .btn.btn-primary.refreshPage {
@@ -229,7 +229,7 @@
     width: 198px !important;
 }
 .listing-head {
-    border-bottom: 2px #00b9d9 solid;
+    border-bottom: 2px rgb(186, 47, 186) solid;
     font-weight: bold;
     padding-bottom: 9px;
     padding-top: 15px;
@@ -302,7 +302,7 @@
     color: #778899;
 }
 .listing-row div:nth-child(2) i:hover {
-    color: #00b9d9;
+    color: rgb(186, 47, 186);
 }
 .listing-row div img {
     width: 35px;
@@ -462,7 +462,7 @@
 }
 #reassurance_block .category_reassurance i.selected,
 #reassurance_block .category_reassurance img.selected {
-    border: 2px solid #00b9d9;
+    border: 2px solid rgb(186, 47, 186);
 }
 #reassurance_block .category_reassurance i:hover,
 #reassurance_block .category_reassurance img:hover {
@@ -589,7 +589,7 @@
     border: 1px solid #d3d8db;
 }
 #display label > div > .input_img:checked ~ img {
-    border: 2px solid #00b9d9;
+    border: 2px solid rgb(186, 47, 186);
 }
 
 /* Tab Appearance */
