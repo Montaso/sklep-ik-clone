@@ -1,25 +1,29 @@
 import env
 from data_storage import *
-from scrapper.scrapper_modules.products_extraction import get_products_in_category
-from scrapper_modules.categories_extraction import get_categories
+from scrapper_modules.products_extraction import get_products_in_category
+from scrapper_modules.categories_extraction import get_categories, load_categories_from_csv
 
 
 def main():
     categories = get_categories()
+    # categories = load_categories_from_csv(env.PATH_CATEGORIES_CSV)
 
     list_exported_categories(categories)
     create_categories_directories(categories, env.PATH_SAVE_DIRECTORY)
-    save(categories, env.PATH_CATEGORIES_CSV)
+    save(categories, env.PATH_CATEGORIES_CSV, 'w')
 
     for category in categories:
+        # this ensures only one wool is downloaded - testing
+        #
+        # if (category.name != "ESTOŃSKA WEŁNA ARTYSTYCZNA 8-1" and
+        #        ((category.parent_category is not None and category.parent_category.name == "Włóczki") or
+        #        (category.parent_category is not None and category.parent_category.parent_category is not None
+        #        and category.parent_category.parent_category.name == "Włóczki"))):
+        #    print(f"skipping {category.name}")
+        #    continue
         products = get_products_in_category(category)
         if products:
             save(products, env.PATH_PRODUCTS_CSV)
-
-        
-        #with open(save_path, 'w', encoding="utf-8") as file:
-        #    for product in products:
-        #        file.write(f"{product.to_csv()}\n")
 
 
 def list_exported_categories(categories: [Category]):

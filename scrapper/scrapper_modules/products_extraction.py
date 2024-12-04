@@ -3,9 +3,9 @@ import os
 import requests
 from bs4 import BeautifulSoup
 import re
-from scrapper import env
-from scrapper.models.Category import Category
-from scrapper.models.Product import Product
+import env
+from models.Category import Category
+from models.Product import Product
 
 
 # !!!! metoda nie działa w sklep-ik, stworzona dla blasters4masters
@@ -45,14 +45,21 @@ def get_imgs(soup: BeautifulSoup, product_name: str, category_name: str) -> [str
     return uri_array
 
 
+def get_product_name(soup: BeautifulSoup):
+    fusions = soup.find_all('div', class_='fusion-title')
+    fusion_num = int((len(fusions) - 5) / 2)
+    product_name = soup.find('div', class_=f'fusion-title-{fusion_num}')
+    if product_name:
+        return product_name.get_text(strip=True)
+    return ""
+
+
 # tworzy instację Product z odpowiedniego fragmentu html
 def extract_product(products_subpage_url: str, products_category: Category) -> Product:
     response = requests.get(products_subpage_url)
     soup = BeautifulSoup(response.text, 'html.parser')
 
-    product_name = soup.find('div', class_='fusion-title-2')
-    if product_name:
-        product_name = product_name.get_text(strip=True)
+    product_name = get_product_name(soup)
 
     product_current_price = None
     product_original_price = None
@@ -77,7 +84,6 @@ def extract_product(products_subpage_url: str, products_category: Category) -> P
             price_match = re.match(r'([\d,]+zł)', product_price_text)
             if price_match:
                 product_current_price = (price_match.group(1))
-        
 
     product_desc_meta_tag = soup.find('meta', attrs={'name': 'description'})
     product_desc = None
@@ -134,7 +140,7 @@ def extract_product(products_subpage_url: str, products_category: Category) -> P
             elif box_text[-1] == '%':
                 product_discount = box_text
         
-    return Product(name= product_name, original_price=product_original_price, new_price=product_current_price, link=products_subpage_url, desc=product_desc, img_uris=product_uris, category=products_category, attributes=product_attributes, discount=product_discount, advises=product_advices_urls, weight=product_weight)
+    return Product(name=product_name, original_price=product_original_price, new_price=product_current_price, link=products_subpage_url, desc=product_desc, img_uris=product_uris, category=products_category, attributes=product_attributes, discount=product_discount, advises=product_advices_urls, weight=product_weight)
 
 
 # funkcja pobiera dane o wszystkich produktach w kategorii (ich nazwę i cenę)
@@ -150,6 +156,7 @@ def get_products_in_category(category: Category) -> [Product]:
     products_div = category_soup.find_all('div', attrs={'class': 'product-details-container'})
 
     for div in products_div:
+        product_link = "<link not loaded>"
         try:
             # znajdywanie linku w kontenerze produktu
             a_tag = div.find('a')
