@@ -1,0 +1,43 @@
+ 
+
+{shop_url}
+
+Cześć {firstname} {lastname},
+
+Dziękujemy za twój zakup w {shop_name}!
+
+Szczegóły zamówienia
+
+Zamówienie: {order_name} Złożone dnia {date}
+
+Płatność: {payment}
+
+Referencja	Produkt	Cena	Ilość	Całkowita cena  {products_txt} {discounts_txt}
+Produkty	{total_products}
+Zniżki	{total_discounts}
+Opakowanie prezentowe	{total_wrapping}
+Dostawa	{total_shipping}
+Uwzględniając podatek	{total_tax_paid}
+W całości zapłacono	{total_paid}
+
+Dostawa
+
+Kurier: {carrier}
+
+Płatność: {payment}
+
+Adres dostawy
+
+{delivery_block_txt}
+
+Adres płatności
+
+{invoice_block_txt}
+
+Aby śledzić status swojego zamówienia wejdź w [Historia i szczegóły zamówienia]({history_url}).
+
+Jeżeli używasz konta gościa, możesz śledzić szczegóły zamówienia pod linkiem: [Śledzenie zamówienia gościa]({guest_tracking_url}) w naszym sklepie.
+
+[{shop_name}]({shop_url})
+
+Powered by [PrestaShop](https://www.prestashop.com/?utm_source=marchandprestashop&utm_medium=e-mail&utm_campaign=footer_1-7)
