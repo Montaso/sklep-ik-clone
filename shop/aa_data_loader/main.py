@@ -9,7 +9,7 @@ import send
 import repository
 import xml.etree.ElementTree as ET
 
-SEND_CATEGORIES = True
+SEND_CATEGORIES = False
 UPLOAD_IMAGES = True
 PRODUCTS_PER_CATEGORY = 1000
 PATH_PRODUCTS_CSV = 'data/prod/products.csv'
