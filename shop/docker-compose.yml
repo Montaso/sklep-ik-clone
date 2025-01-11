@@ -1,7 +1,9 @@
 services:
   mysql:
     container_name: mysql
-    image: mysql:9
+    build: 
+      context: .
+      dockerfile: mysql.dockerfile
     environment:
       MYSQL_ROOT_PASSWORD: kocham_biznes
       MYSQL_DATABASE: sklepik
@@ -9,11 +11,12 @@ services:
       - prestashop_network
     volumes:
       - ./dbdata:/var/lib/mysql
-      - ./dbdump:/var/lib/dbdump
   
   phpmyadmin:
     container_name: phpmyadmin
-    image: phpmyadmin:5.2.1
+    build:
+      context: .
+      dockerfile: presta.dockerfile
     ports:
       - 90:80
     environment:
@@ -27,7 +30,7 @@ services:
   
   prestashop:
     container_name: prestashop
-    image: prestashop/prestashop:1.7.8
+    build: ./presta.dockerfile
     depends_on:
       - mysql
     ports:
