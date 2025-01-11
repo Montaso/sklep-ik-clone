@@ -1,7 +1,9 @@
 services:
   mysql:
     container_name: mysql
-    image: mysql:9
+    build:
+      context: ./..
+      dockerfile: ./shop/mysql.dockerfile
     environment:
       MYSQL_ROOT_PASSWORD: kocham_biznes
       MYSQL_DATABASE: sklepik
@@ -27,14 +29,13 @@ services:
   
   prestashop:
     container_name: prestashop
-    image: prestashop/prestashop:1.7.8
+    build:
+      context: ./..
+      dockerfile: ./shop/presta.dockerfile
     depends_on:
       - mysql
     ports:
-      - 8080:443
-    volumes:
-      - ./src:/var/www/html
-      - ./certs:/etc/ssl
+      - 19323:443
     environment:
       DB_SERVER: mysql
       DB_NAME: sklepik
@@ -42,11 +43,12 @@ services:
       DB_PASSWD: kocham_biznes
       PS_LANGUAGE: ${PS_LANGUAGE:-pl}
       PS_COUNTRY: ${PS_COUNTRY:-pl}
-      PS_DOMAIN: localhost:8080
+      PS_DOMAIN: localhost:19323
       PS_FOLDER_ADMIN: admin
       PS_FOLDER_INSTALL: install
       PS_DEV_MODE: 1
       PS_INSTALL_AUTO: 1
+      PS_ENABLE_SSL: 1
       ADMIN_MAIL: admin@admin.com
       ADMIN_PASSWD: admin
     networks:
