@@ -14,9 +14,7 @@ services:
   
   phpmyadmin:
     container_name: phpmyadmin
-    build:
-      context: .
-      dockerfile: presta.dockerfile
+    image: phpmyadmin:5.2.1
     ports:
       - 90:80
     environment:
@@ -30,14 +28,15 @@ services:
   
   prestashop:
     container_name: prestashop
-    build: ./presta.dockerfile
+    build:
+      context: .
+      dockerfile: presta.dockerfile
     depends_on:
       - mysql
     ports:
       - 8080:443
     volumes:
       - ./src:/var/www/html
-      - ./certs:/etc/ssl
     environment:
       DB_SERVER: mysql
       DB_NAME: sklepik

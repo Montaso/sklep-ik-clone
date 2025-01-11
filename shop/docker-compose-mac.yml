@@ -1,7 +1,9 @@
 services:
   mysql:
     container_name: mysql
-    image: mysql:8.0.33 
+    build: 
+      context: .
+      dockerfile: mysql.dockerfile
     platform: linux/amd64 
     environment:
       MYSQL_ROOT_PASSWORD: kocham_biznes
@@ -10,11 +12,12 @@ services:
       - prestashop_network
     volumes:
       - ./dbdata:/var/lib/mysql
-      - ./dbdump:/var/lib/dbdump
   
   phpmyadmin:
     container_name: phpmyadmin
-    image: phpmyadmin:latest
+    build:
+      context: .
+      dockerfile: presta.dockerfile
     platform: linux/amd64
     environment:
       - PMA_HOST=mysql
