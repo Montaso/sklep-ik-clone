@@ -1,7 +1,8 @@
 FROM prestashop/prestashop:1.7.8
 
-COPY ./certs/* /etc/ssl
-COPY ../config/default-ssl.conf /etc/apache2/sites-available
+COPY ./shop/certs/* /etc/ssl
+COPY ./config/default-ssl.conf /etc/apache2/sites-available
+COPY ./shop/src /var/www/html
 
 RUN a2enmod ssl
 RUN a2ensite default-ssl
