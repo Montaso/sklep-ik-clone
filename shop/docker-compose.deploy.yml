@@ -6,7 +6,7 @@ services:
       dockerfile: ./shop/presta.deploy.dockerfile
     ports:
       - 19323:443
-    entrypoint: /usr/entrypoint.sh
+    entrypoint: ["bash", "/entrypoint.sh"]
     environment:
       DB_SERVER: mysql
       DB_NAME: sklepik

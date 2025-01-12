@@ -1,7 +1,8 @@
 FROM prestashop/prestashop:1.7.8
 
 COPY ./shop/dbdump/dump.sql /usr/dump.sql
-COPY ./shop/presta-entrypoint.sh /usr/entrypoint.sh
+COPY ./shop/presta-entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 COPY ./shop/certs/* /etc/ssl
 COPY ./config/default-ssl.conf /etc/apache2/sites-available
