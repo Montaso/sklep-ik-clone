@@ -32,6 +32,8 @@ services:
     build:
       context: ./..
       dockerfile: ./shop/presta.dockerfile
+    volumes:
+      - ./back-src:/var/www/back-src
     depends_on:
       - mysql
     ports:
@@ -56,6 +58,3 @@ services:
 
 networks:
   prestashop_network:
-
-volumes:
-  presta-2:
