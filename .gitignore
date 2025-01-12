@@ -11,3 +11,6 @@ General**
 !/shop/src/modules/*
 !/shop/src/config/*
 !/shop/src/img/*
+
+/shop/back-src/*
+!/shop/back-src/
