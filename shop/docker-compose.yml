@@ -32,11 +32,8 @@ services:
     build:
       context: ./..
       dockerfile: ./shop/presta.dockerfile
-<<<<<<< HEAD
     volumes:
       - ./back-src:/var/www/back-src
-=======
->>>>>>> master
     depends_on:
       - mysql
     ports:

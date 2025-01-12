@@ -9,5 +9,6 @@ COPY ./config/default-ssl.conf /etc/apache2/sites-available
 
 RUN rm -rf /var/www/html
 COPY --chown=www-data:www-data --chmod=755 ./shop/src/ /var/www/html
+COPY --chown=www-data:www-data --chmod=755 ./config/parameters.deploy.php /var/www/html/app/config/parameters.php
 
 RUN a2enmod ssl && a2ensite default-ssl
