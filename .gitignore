@@ -14,3 +14,4 @@ General**
 
 /shop/back-src/*
 !/shop/back-src/
+!/shop/back-src/.gitkeep
