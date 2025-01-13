@@ -3,7 +3,7 @@ services:
     container_name: prestashop
     build:
       context: ./..
-      dockerfile: ./shop/presta.deploy.dockerfile deploy:
+      dockerfile: ./shop/presta.deploy.dockerfile
     ports:
       - 19323:443
     entrypoint: ["bash", "/entrypoint.sh"]
@@ -22,10 +22,12 @@ services:
       PS_ENABLE_SSL: 1
       ADMIN_MAIL: admin@admin.com
       ADMIN_PASSWD: admin
-    resources:
-      limits:
-        cpus: '1.0'
-        memory: 512M
-      reservations:
-        cpus: '0.5'
-        memory: 256M
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+    restart: unless-stopped

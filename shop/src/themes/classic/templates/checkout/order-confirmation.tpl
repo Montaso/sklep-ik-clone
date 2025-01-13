@@ -107,4 +107,30 @@
       {hook h='displayOrderConfirmation2'}
     </section>
   {/block}
+
+<!-- Google Analytics purchase tracking -->
+<script>
+  console.log({$order|@json_encode})
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'purchase',
+    ecommerce: {
+      transaction_id: '{if isset($order.id)}{$order.id|escape:'html':'UTF-8'}{/if}', 
+      affiliation: '{if isset($shop_name)}{$shop_name|escape:'html':'UTF-8'}{/if}', 
+      value: '{if isset($order.total_paid_tax_incl)}{$order.total_paid_tax_incl|escape:'html':'UTF-8'}{/if}', 
+      currency: '{if isset($order.currency)}{$order.currency|escape:'html':'UTF-8'}{/if}',
+      items: [
+        {foreach $order.products as $product}
+        {
+          item_name: '{if isset($product.name)}{$product.name|escape:'html':'UTF-8'}{/if}', 
+          item_id: '{if isset($product.id_product)}{$product.id_product|escape:'html':'UTF-8'}{/if}',
+          price: '{if isset($product.price)}{$product.price|escape:'html':'UTF-8'}{/if}', 
+          quantity: '{if isset($product.quantity)}{$product.quantity|escape:'html':'UTF-8'}{/if}'
+        }{if !$product@last},{/if}
+        {/foreach}
+      ]
+    }
+  });
+</script>
+
 {/block}
