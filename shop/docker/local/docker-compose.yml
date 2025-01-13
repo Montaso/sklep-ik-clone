@@ -1,10 +1,9 @@
 services:
   mysql:
     container_name: mysql
-    build: 
-      context: .
-      dockerfile: mysql.dockerfile
-    platform: linux/amd64 
+    build:
+      context: ./../../..
+      dockerfile: ./shop/mysql.dockerfile
     environment:
       MYSQL_ROOT_PASSWORD: kocham_biznes
       MYSQL_DATABASE: sklepik
@@ -12,13 +11,13 @@ services:
       - prestashop_network
     volumes:
       - ./dbdata:/var/lib/mysql
+      - ./dbdump:/var/lib/dbdump
   
   phpmyadmin:
     container_name: phpmyadmin
-    build:
-      context: .
-      dockerfile: presta.dockerfile
-    platform: linux/amd64
+    image: phpmyadmin:5.2.1
+    ports:
+      - 90:80
     environment:
       - PMA_HOST=mysql
       - PMA_USER=root
@@ -27,20 +26,18 @@ services:
       - prestashop_network
     depends_on:
       - mysql
-    ports:
-      - 90:80
   
   prestashop:
     container_name: prestashop
-    image: prestashop/prestashop:1.7.8
-    platform: linux/amd64 
+    build:
+      context: ./../../..
+      dockerfile: ./shop/presta.dockerfile
+    volumes:
+      - ./back-src:/var/www/back-src
     depends_on:
       - mysql
     ports:
-      - 8080:443
-    volumes:
-      - ./src:/var/www/html
-      - ./certs:/etc/ssl
+      - 19323:443
     environment:
       DB_SERVER: mysql
       DB_NAME: sklepik
@@ -48,11 +45,12 @@ services:
       DB_PASSWD: kocham_biznes
       PS_LANGUAGE: ${PS_LANGUAGE:-pl}
       PS_COUNTRY: ${PS_COUNTRY:-pl}
-      PS_DOMAIN: localhost:8080
+      PS_DOMAIN: localhost:19323
       PS_FOLDER_ADMIN: admin
       PS_FOLDER_INSTALL: install
       PS_DEV_MODE: 1
       PS_INSTALL_AUTO: 1
+      PS_ENABLE_SSL: 1
       ADMIN_MAIL: admin@admin.com
       ADMIN_PASSWD: admin
     networks:
@@ -60,6 +58,3 @@ services:
 
 networks:
   prestashop_network:
-
-volumes:
-  presta-2:
