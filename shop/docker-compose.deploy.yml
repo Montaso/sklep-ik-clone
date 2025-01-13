@@ -6,7 +6,7 @@ services:
       dockerfile: ./shop/presta.deploy.dockerfile
     ports:
       - 19323:443
-    entrypoint: /usr/entrypoint.sh
+    entrypoint: ["bash", "/entrypoint.sh"]
     environment:
       DB_SERVER: mysql
       DB_NAME: sklepik
@@ -22,3 +22,12 @@ services:
       PS_ENABLE_SSL: 1
       ADMIN_MAIL: admin@admin.com
       ADMIN_PASSWD: admin
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+    restart: unless-stopped

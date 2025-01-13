@@ -22,7 +22,19 @@
  * @copyright Since 2007 PrestaShop SA and Contributors
  * @license   https://opensource.org/licenses/AFL-3.0 Academic Free License 3.0 (AFL-3.0)
  *}
+
 {block name='head_charset'}
+
+  {literal}
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TZ63TBL7');</script>
+    <!-- End Google Tag Manager -->
+  {/literal}
+
   <meta charset="utf-8">
 {/block}
 {block name='head_ie_compatibility'}
@@ -34,6 +46,12 @@
   {block name='hook_after_title_tag'}
     {hook h='displayAfterTitleTag'}
   {/block}
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TZ63TBL7"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
   <meta name="description" content="{block name='head_seo_description'}{$page.meta.description}{/block}">
   <meta name="keywords" content="{block name='head_seo_keywords'}{$page.meta.keywords}{/block}">
   {if $page.meta.robots !== 'index'}
@@ -70,6 +88,17 @@
 {block name='head_viewport'}
   <meta name="viewport" content="width=device-width, initial-scale=1">
 {/block}
+
+{literal}
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YRN6DR93KY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-YRN6DR93KY');
+  </script>
+{/literal}
 
 {block name='head_icons'}
   <link rel="icon" type="image/vnd.microsoft.icon" href="{$shop.favicon}?{$shop.favicon_update_time}">
