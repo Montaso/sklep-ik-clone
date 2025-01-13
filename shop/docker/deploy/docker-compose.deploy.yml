@@ -1,7 +1,7 @@
 services:
   prestashop:
     container_name: prestashop
-    image: arivaldi/sklepik-prestashop:latest
+    image: arivaldi/sklepik-prestashop:5.0
     ports:
       - 19323:443
     entrypoint: ["bash", "/entrypoint.sh"]
