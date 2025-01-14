@@ -66,7 +66,7 @@ public class BuyHandle {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("pobrać fakturę"))).click();
         
-        // Thread.sleep(5000);
-        // driver.findElement(By.partialLinkText("pobrać fakturę")).click();
+        Thread.sleep(5000);
+        //driver.findElement(By.partialLinkText("pobrać fakturę")).click();
     }
 }

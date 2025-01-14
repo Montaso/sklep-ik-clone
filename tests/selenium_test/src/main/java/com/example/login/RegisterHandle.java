@@ -22,7 +22,7 @@ public class RegisterHandle {
 
     private final String firstName = "Tomasz";
     private final String lastName = "Siemaszko";
-    private final String email = "matip04+aaaaaaa@gmail.com"; // było: 7
+    private final String email = "matip04+aaaaaaaaaa@gmail.com"; // było: 10
     private final String password = "marcinek123";
     
     private final String privacyCheckboxName = "customer_privacy";

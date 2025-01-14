@@ -18,10 +18,10 @@ public class CartRemoveHandle {
         driver.get(cartLink);
 
         driver.findElement(By.className("remove-from-cart")).click();
-        Thread.sleep(1000);
+        Thread.sleep(5000);
         driver.findElement(By.className("remove-from-cart")).click();
-        Thread.sleep(1000);
+        Thread.sleep(5000);
         driver.findElement(By.className("remove-from-cart")).click();
-        Thread.sleep(1000);
+        Thread.sleep(5000);
     }
 }
