@@ -31,7 +31,11 @@ services:
     container_name: prestashop
     build:
       context: ./../../..
+<<<<<<< HEAD
       dockerfile: ./shop/docker/local/presta.dockerfile
+=======
+      dockerfile: ./shop/presta.dockerfile
+>>>>>>> master
     volumes:
       - ./shop/back-src:/var/www/back-src
     depends_on:
