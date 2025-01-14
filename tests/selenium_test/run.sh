@@ -1,0 +1,1 @@
+/usr/bin/env /Users/mateusz_p/.vscode/extensions/redhat.java-1.37.0-darwin-arm64/jre/17.0.13-macosx-aarch64/bin/java @/var/folders/cj/94pn2r2n2mb1lp2c2n8lfjr40000gn/T/cp_15rwxs958s56wtly60tpvixkv.argfile com.example.Main

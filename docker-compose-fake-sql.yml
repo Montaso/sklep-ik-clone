@@ -1,0 +1,12 @@
+services:
+  mysql:
+    container_name: mysql
+    build:
+      context: ./..
+      dockerfile: ./shop/mysql.dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: kocham_biznes
+      MYSQL_DATABASE: sklepik
+    volumes:
+      - ./dbdata:/var/lib/mysql
+      - ./dbdump:/var/lib/dbdump
