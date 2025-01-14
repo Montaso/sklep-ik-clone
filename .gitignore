@@ -4,6 +4,9 @@
 __pycache__
 /shop/dbdata/*
 General**
+*.jar
+
+/tests/selenium_test/target/*
 
 /shop/src/*
 !/shop/src/

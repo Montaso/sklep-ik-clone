@@ -61,12 +61,12 @@ public class BuyHandle {
 
         Thread.sleep(2000);
         // Place an order
-        // driver.findElement(By.xpath("//button[contains(text(), 'Złóż zamówienie')]")).click();
+        driver.findElement(By.xpath("//button[contains(text(), 'Złóż zamówienie')]")).click();
 
-        // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        // wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("pobrać fakturę"))).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("pobrać fakturę"))).click();
         
-        Thread.sleep(5000);
-        //driver.findElement(By.partialLinkText("pobrać fakturę")).click();
+        // Thread.sleep(5000);
+        // driver.findElement(By.partialLinkText("pobrać fakturę")).click();
     }
 }

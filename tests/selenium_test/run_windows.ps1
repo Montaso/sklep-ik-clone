@@ -1,0 +1,1 @@
+java -jar out/artifacts/selenium_test_jar/selenium_test.jar
