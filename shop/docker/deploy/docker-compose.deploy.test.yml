@@ -1,0 +1,35 @@
+# composition for testing deployment image locally
+
+services:
+  prestashop:
+    container_name: prestashop
+    build:
+      context: ./../../..
+      dockerfile: ./shop/docker/deploy/presta.deploy.dockerfile
+    ports:
+      - 19323:443
+    entrypoint: ["bash", "/entrypoint.sh"]
+    environment:
+      DB_SERVER: admin-mysql_db
+      DB_NAME: BE_193237
+      DB_USER: root
+      DB_PASSWD: student
+      PS_LANGUAGE: ${PS_LANGUAGE:-pl}
+      PS_COUNTRY: ${PS_COUNTRY:-pl}
+      PS_DOMAIN: localhost:19323
+      PS_FOLDER_ADMIN: admin
+      PS_FOLDER_INSTALL: install
+      PS_DEV_MODE: 1
+      PS_INSTALL_AUTO: 1
+      PS_ENABLE_SSL: 1
+      ADMIN_MAIL: admin@admin.com
+      ADMIN_PASSWD: admin
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+    restart: unless-stopped
