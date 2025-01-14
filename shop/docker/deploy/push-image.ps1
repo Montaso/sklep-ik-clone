@@ -1,6 +1,6 @@
 param (
-	[string]$Arg1
-	[string]$Arg2
+	[string]$Arg1, 	# img name
+	[string]$Arg2	# img tag
 )
 
 docker login
