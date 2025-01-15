@@ -12,7 +12,10 @@
 - \<Python> - \<3.12.0>
 
 ## Compilation instruction
-Nothing to compile yet
+1. Login to PG bastion server
+2. Login to swarm claster
+3. Build and publish deploy docker image using build-and-deploy.ps1
+4. Pull image using docker-compose.deploy.yml on swarm claster
 
 ## Project team
 - <a href="github.com/montaso">Mateusz Przyborski</a>
