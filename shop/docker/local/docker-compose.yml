@@ -10,8 +10,8 @@ services:
     networks:
       - prestashop_network
     volumes:
-      - .shop/dbdata:/var/lib/mysql
-      - ./dbdump:/var/lib/dbdump
+      - ./../../../shop/dbdata:/var/lib/mysql
+      - ./../../../shop/dbdump:/var/lib/dbdump
   
   phpmyadmin:
     container_name: phpmyadmin
@@ -33,7 +33,7 @@ services:
       context: ./../../..
       dockerfile: ./shop/docker/local/presta.dockerfile
     volumes:
-      - ./shop/back-src:/var/www/back-src
+      - ./../../../shop/back-src:/var/www/back-src
     depends_on:
       - mysql
     ports:

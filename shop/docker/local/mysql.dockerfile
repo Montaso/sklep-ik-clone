@@ -1,3 +1,3 @@
 FROM mysql:9
 
-COPY ./shop/dbdump/dump.sql /docker-entrypoint-initdb.d/
+COPY ./../../../shop/dbdump/dump-mysql9.sql /docker-entrypoint-initdb.d/

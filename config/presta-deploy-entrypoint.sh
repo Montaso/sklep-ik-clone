@@ -29,5 +29,7 @@ else
     echo "loaded db dump"
 fi
 
+cat /var/www/html/app/config/parameters.php
+
 echo "starting apache2 server..."
 exec apache2-foreground
