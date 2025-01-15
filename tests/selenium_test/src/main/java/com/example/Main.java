@@ -11,6 +11,7 @@ import com.example.login.RegisterHandle;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException{
+        System.out.print("email: " + args[0] + "buying: " + args[1]);
         // Create EdgeOptions to customize browser behavior
         EdgeOptions options = new EdgeOptions();
         options.setCapability("acceptInsecureCerts", true); // Bypass SSL errors
@@ -20,7 +21,7 @@ public class Main {
         driver.get("https://localhost:19323");
         driver.manage().window().maximize();
 
-        new RegisterHandle(driver).run();
+        new RegisterHandle(driver, args[0]).run();
         //new LoginHandle(driver).run();
         Thread.sleep(5000);
 
@@ -31,7 +32,7 @@ public class Main {
         new CartRemoveHandle(driver).run();
         Thread.sleep(5000);
 
-        new BuyHandle(driver).run();
+        new BuyHandle(driver, args[1]).run();
         Thread.sleep(2000);
         
         new CheckStatusHandle(driver).run();

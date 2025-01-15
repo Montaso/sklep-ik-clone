@@ -16,6 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BuyHandle {
     private final WebDriver driver;
+    private final String shouldBuy;
     //private final String cartLink = "https://localhost:8080/koszyk?action=show";
     private final String orderLink = "https://localhost:19323/zam%C3%B3wienie";
     
@@ -61,11 +62,12 @@ public class BuyHandle {
 
         Thread.sleep(2000);
         // Place an order
-        driver.findElement(By.xpath("//button[contains(text(), 'Złóż zamówienie')]")).click();
+        if (shouldBuy != null && (shouldBuy.equals("y") || shouldBuy.equals("Y"))) {
+            driver.findElement(By.xpath("//button[contains(text(), 'Złóż zamówienie')]")).click();
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("pobrać fakturę"))).click();
-        
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.linkText("pobrać fakturę"))).click();
+        }
         Thread.sleep(5000);
         //driver.findElement(By.partialLinkText("pobrać fakturę")).click();
     }

@@ -13,6 +13,7 @@ import lombok.Setter;
 public class RegisterHandle {
 
     private final WebDriver driver;
+    private final String email;
     private final String registrationLink = "https://localhost:19323/logowanie?create_account=1";
 
     private final String firstNameFieldID = "field-firstname";
@@ -22,14 +23,12 @@ public class RegisterHandle {
 
     private final String firstName = "Tomasz";
     private final String lastName = "Siemaszko";
-    private final String email = "matip04+aaaaaaaaaa@gmail.com"; // było: 10
     private final String password = "marcinek123";
     
     private final String privacyCheckboxName = "customer_privacy";
     private final String tosCheckboxName = "psgdpr";
 
     private final String submitButtonClass = "form-control-submit";
-
 
     public void run() throws InterruptedException{ 
         driver.get(registrationLink);
